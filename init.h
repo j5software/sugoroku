@@ -29,7 +29,7 @@ typedef struct player
   int num;
   char name[20];
   int money;
-  bag items;
+  bag _bag;    //change name
   position pos;
 } player;
 
