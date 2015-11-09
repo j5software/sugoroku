@@ -3,7 +3,7 @@ CFLAGS   = -g -MMD -MP -Wall -Wextra -Winit-self -Wno-unused-parameter -Wfloat-e
 LDFLAGS  =
 LIBS     =
 INCLUDE  = -I../include
-TARGET   = bin/sugoroku
+TARGET   = ./bin/sugoroku
 OBJDIR   = ./obj
 ifeq "$(strip $(OBJDIR))" ""
   OBJDIR = .
