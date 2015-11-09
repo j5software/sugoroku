@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "init.h"
+
 int throwDice(void)
 {
   int num;
 
-  srand = ((unsigned)time(NULL));
+  srand((unsigned)time(NULL));
   num = rand() % 6 + 1;
 
   return num;
