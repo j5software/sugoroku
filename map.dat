@@ -1,13 +1,10 @@
-#include "init.h"
 #include "map.h"
-#include "bass.h"
-
-
-
 
 int main(void) {
   map m;
-  initMap(&m, 8, 8);
+  m.width = m.height = 16;
   readMap(&m, "./map.dat");
+  return 0;
+});
   return 0;
 }

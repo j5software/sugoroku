@@ -1,4 +1,5 @@
-bin/
+obj/*
+bin/*
 *.swp
 *.o
 *.d
