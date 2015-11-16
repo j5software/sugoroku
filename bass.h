@@ -1,5 +1,7 @@
 #ifndef __BASS_H__
 #define __BASS_H__
+#include "bag.h"
+#include "player.h"
 
 int throwDice(void);
 void movePlayer(player *p, map *m);

@@ -1,17 +1,7 @@
 #ifndef __INIT_H__
 #define __INIT_H__
 #include "map.h"
-
-typedef struct position
-{
-  int x;
-  int y;
-} position;
-
-typedef struct bag
-{
-  int items[20];
-} bag;
+#include "player.h"
 
 typedef struct item
 {
