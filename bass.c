@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "init.h"
+#include "map.h"
 
 int throwDice(void)
 {

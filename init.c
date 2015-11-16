@@ -16,11 +16,6 @@ void initPlayer(player *p)
   p->pos.y = 0;
 }
 
-void initMap(map *p)
-{
-
-}
-
 void initItem(item *p)
 {
   //make item  file -> read item file

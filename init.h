@@ -1,18 +1,12 @@
 #ifndef __INIT_H__
 #define __INIT_H__
+#include "map.h"
 
 typedef struct position
 {
   int x;
   int y;
 } position;
-
-typedef struct map
-{
-  int **field;
-  int width;
-  int height;
-} map;
 
 typedef struct bag
 {
@@ -36,7 +30,6 @@ typedef struct player
 
 
 void initPlayer(player *p);
-void initMap(map *p);
 void initItem(item *p);
 void inputName(player *p);
 
