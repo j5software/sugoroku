@@ -18,18 +18,9 @@ typedef struct item
   char name[20];
 } item;
 
-typedef struct player
-{
-  int num;
-  char name[20];
-  int money;
-  bag _bag;    //change name
-  position pos;
-} player;
 
 
 
-void initPlayer(player *p);
 void initItem(item *p);
 void inputName(player *p);
 
