@@ -1,6 +1,6 @@
 COMPILER = gcc
 CFLAGS   = -g -MMD -MP -Wall -Wextra -Winit-self -Wno-unused-parameter -Wfloat-equal
-LDFLAGS  =
+LDFLAGS  = -lncurses
 LIBS     =
 INCLUDE  = -I../include
 TARGET   = ./bin/sugoroku
