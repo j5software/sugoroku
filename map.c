@@ -15,7 +15,7 @@ void initMap(map* h, int width, int height) {
 
 void readMap(map* p, char* dir) {
   FILE* fp;
-  char ch = '0';
+  int ch = 0;
   int x, y;
 
   fp = fopen(dir, "rb");
@@ -26,7 +26,8 @@ void readMap(map* p, char* dir) {
 
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
-      ch = getc(fp);
+      //ch = getc(fp);
+      fscanf(fp, "%d", &ch);
       printf("%3X", ch);
       if(ch == EOF) {
         printf("MapFile format error.");

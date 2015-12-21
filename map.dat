@@ -1,10 +1,5 @@
-#include "map.h"
-
-int main(void) {
-  map m;
-  m.width = m.height = 16;
-  readMap(&m, "./map.dat");
-  return 0;
-});
-  return 0;
-}
+1 2 3 4 5
+1 2 3 4 5
+4 3 2 1 5
+0 0 0 1 2
+0 1 4 2 3
