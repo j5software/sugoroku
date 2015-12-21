@@ -10,7 +10,8 @@ void initPlayer(player *p)
   inputName(p);
   p->money = 1000;
   for (i = 0; i < 20; i ++) {
-    p->_bag.items[i] = -1;      //-1で何も持ってない　アイテム番号を格納する
+    p->_bag.items[i][0] = -1;      //-1で何も持ってない　アイテム番号を格納する
+    p->_bag.items[i][1] = -1;      //-1で何も持ってない　アイテム個数を格納する
   }
   p->pos.x = 0;
   p->pos.y = 0;
