@@ -1,6 +1,7 @@
 #include "map.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <ncurses.h>
 
 void initMap(map* h, int width, int height) {
   int i;
@@ -26,16 +27,11 @@ void readMap(map* p, char* dir) {
 
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
-      //ch = getc(fp);
       fscanf(fp, "%d", &ch);
-      printf("%3X", ch);
-      if(ch == EOF) {
-        printf("MapFile format error.");
-        return;
-      }
+      //printf("%3X", ch);
+      mvaddch(y, x, ch + '0');
       p->field[y][x] = ch;
     }
-    puts("");
   }
 
   fclose(fp);

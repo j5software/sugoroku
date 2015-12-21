@@ -1,9 +1,13 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
+
 typedef struct item
 {
-  char* property[20];
+  char name[20];
+  int id;
 } item;
+
+extern item* items;
 
 #endif

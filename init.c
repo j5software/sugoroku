@@ -2,6 +2,16 @@
 
 #include "init.h"
 
+void initCurses() {
+  initscr();
+  curs_set(0);
+  noecho();
+  cbreak();
+  timeout(1);
+  keypad(stdscr,TRUE);
+  clear();
+}
+
 void initPlayer(player *p)
 {
   int i;
