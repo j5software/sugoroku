@@ -3,7 +3,8 @@
 
 typedef struct bag
 {
-  int items[20];
+  // 1アイテム番号,2は個数
+  int items[20][2];
 } bag;
 
 #endif
