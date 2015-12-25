@@ -1,9 +1,9 @@
-#include "map.h"
+#include "Map.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
 
-void initMap(map* h, int width, int height) {
+void initMap(Map* h, int width, int height) {
   int i;
   h->field = (int**)malloc(sizeof(int*)*height);
   h->width = width;
@@ -14,21 +14,23 @@ void initMap(map* h, int width, int height) {
   }
 }
 
-void readMap(map* p, char* dir) {
+void readMap(Map* p, char* dir) {
   FILE* fp;
   int ch = 0;
   int x, y;
 
   fp = fopen(dir, "rb");
   if(fp == NULL) {
-    printf("Can't open map file.");
+    printf("Can't open Map file.");
     return;
   }
+  fscanf(fp, "%d", &p->width);
+  fscanf(fp, "%d", &p->height);
+  initMap(p, p->width, p->height);
 
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
       fscanf(fp, "%d", &ch);
-      //printf("%3X", ch);
       mvaddch(y, x, ch + '0');
       p->field[y][x] = ch;
     }

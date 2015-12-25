@@ -2,12 +2,12 @@
 #define __ITEM_H__
 
 
-typedef struct item
+typedef struct Item
 {
   char name[20];
   int id;
-} item;
+} Item;
 
-extern item* items;
+void initItem(Item *i);
 
 #endif

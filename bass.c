@@ -15,7 +15,7 @@ int throwDice(void)
   return num;
 }
 
-void movePlayer(player *p, map *m)
+void movePlayer(Player *p, Map *m)
 {
 
 }

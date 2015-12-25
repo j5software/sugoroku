@@ -4,7 +4,7 @@
 #include "player.h"
 
 int throwDice(void);
-void movePlayer(player *p, map *m);
+void movePlayer(Player *p, Map *m);
 void openBag(void);
 void openMenu(void);
 void selectMenu(void);

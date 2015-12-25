@@ -2,22 +2,20 @@
 #define __PLAYER_H__
 #include "bag.h"
 
-typedef struct position
-{
+typedef struct Position {
   int x;
   int y;
-} position;
+} Position;
 
 
-typedef struct player
-{
+typedef struct Player {
   int num;
   char name[20];
   int money;
-  bag _bag;    //change name
-  position pos;
-} player;
+  Bag bag;    //change name
+  Position pos;
+} Player;
 
-void initPlayer(player *p);
+void initPlayer(Player *p);
 
 #endif

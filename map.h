@@ -1,12 +1,12 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-typedef struct map{
+typedef struct Map{
   int** field;
   int width, height;
-} map;
+} Map;
 
-void readMap(map* p, char* dir);
-void initMap(map* h, int width, int height);
+void readMap(Map* p, char* dir);
+void initMap(Map* h, int width, int height); // 直接使うことはないかも
 
 #endif

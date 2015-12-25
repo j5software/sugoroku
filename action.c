@@ -8,6 +8,7 @@ void readKey() {
 }
 
 void selectAction() {
+  /*
   switch(current_key) {
   case KEY_UP:
     selection = (selection-1)%4; // ←ゴミ
@@ -15,5 +16,5 @@ void selectAction() {
   case KEY_DOWN:
     selection = (selection+1)%4;
     break;
-  }
+  }*/
 }
