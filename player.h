@@ -9,13 +9,13 @@ typedef struct Position {
 
 
 typedef struct Player {
-  int num;
+  int player_num;
   char name[20];
   int money;
   Bag bag;    //change name
   Position pos;
 } Player;
 
-void initPlayer(Player *p);
+void initPlayer(Player *p, int player_num);
 
 #endif

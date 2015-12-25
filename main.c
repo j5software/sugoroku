@@ -1,7 +1,4 @@
 #include "init.h"
-#include "map.h"
-#include "bass.h"
-#include "action.h"
 
 int main(void) {
   Sugoroku sugoroku;

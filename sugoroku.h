@@ -3,6 +3,8 @@
 #include "item.h"
 #include "map.h"
 #include "player.h"
+#include "bass.h"
+#include "action.h"
 
 typedef struct Sugoroku {
   Player* player; // プレイヤー全員(配列)

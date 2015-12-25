@@ -6,7 +6,7 @@ void initSugoroku(Sugoroku* s, int player_num) {
   s->player_num = player_num;
   s->player = (Player *)malloc(sizeof(Player)*player_num);
   for(i = 0; i < player_num; i++) {
-    initPlayer(&(s->player[i]));
+    initPlayer(&(s->player[i]), i);
   }
   // ここにmapの初期化を入れる？
   // ここにitemの初期化を入れる？
