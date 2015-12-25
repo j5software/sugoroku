@@ -2,7 +2,6 @@
 #include "map.h"
 #include "bass.h"
 #include "action.h"
-#include "ncurses.h"
 
 int main(void) {
   Sugoroku sugoroku;
