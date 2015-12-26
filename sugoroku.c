@@ -1,5 +1,6 @@
 #include "sugoroku.h"
 #include <stdlib.h>
+#include <ncurses.h>
 
 void initSugoroku(Sugoroku* s, int player_num) {
   int i;
@@ -20,7 +21,7 @@ void sugorokuMain(Sugoroku* sugoroku) {
   while(1) {
     readKey();
     if(current_key == 'q') break;
-    //printw("%d", current_key);
+    //mvprintw(0, 0, "あ");
   }
  /* 
   while(end_flag) {

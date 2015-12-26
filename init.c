@@ -1,8 +1,10 @@
 #include <stdio.h>
-
+#include <locale.h>
 #include "init.h"
 
 void initCurses() {
+  setlocale(LC_ALL,"");
+  //setlocale( LC_CTYPE, "" );
   initscr();
   curs_set(0);
   noecho();
