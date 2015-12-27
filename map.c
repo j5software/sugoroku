@@ -31,7 +31,6 @@ void readMap(Map* p, char* dir) {
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
       fscanf(fp, "%d", &ch);
-      mvaddch(y, x, ch + '0');
       p->field[y][x] = ch;
     }
   }
