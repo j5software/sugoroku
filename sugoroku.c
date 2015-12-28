@@ -25,7 +25,7 @@ void sugorokuMain(Sugoroku* sugoroku) {
     if(current_key == 'q') break;
     //mvprintw(0, 0, "あ");
   }
- /* 
+ /*
   while(end_flag) {
     readkey();
     render();
@@ -50,4 +50,35 @@ void sugorokuMain(Sugoroku* sugoroku) {
       break;
     }
   }*/
+}
+
+
+void importItemFile(Sugoroku* sugoroku)
+{
+  FILE *fp;
+  int i;
+  int c;
+
+  if ((fp = fopen("item.csv", "r")) != NULL) {
+    printf("can't open file.\n");
+    exit(1);
+  }
+
+  if (fp) {
+    sugoroku->item_num = 0;
+    while ((c = getc(fp)) != EOF) {
+      if (c == '\n') {
+        sugoroku->item_num++;
+      }
+    }
+
+    sugoroku->item = (Item *)malloc((sizeof(Item)* sugoroku->item_num));
+
+    for (i = 0; i < sugoroku->item_num; i++) {
+      fscanf(fp, "%d, %s\n", &sugoroku->item[i].id,  sugoroku->item[i].name);
+    }
+
+  }
+
+  fclose(fp);
 }
