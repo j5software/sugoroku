@@ -3,7 +3,7 @@
 #include "item.h"
 #include "map.h"
 #include "player.h"
-#include "Sugoroku.h"
+#include "sugoroku.h"
 #include <ncurses.h>
 
 void inputName(Player *p);

@@ -1,4 +1,5 @@
 #include "sugoroku.h"
+#include "dispmap.h"
 #include <stdlib.h>
 #include <ncurses.h>
 
@@ -20,6 +21,7 @@ void sugorokuMain(Sugoroku* sugoroku) {
   readMap(&sugoroku->map, "./map.dat");
   while(1) {
     readKey();
+    dispmap(&sugoroku->map);
     if(current_key == 'q') break;
     //mvprintw(0, 0, "あ");
   }
