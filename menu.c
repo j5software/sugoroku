@@ -7,10 +7,13 @@ void initMenu(Menu *m, int menu_num) {
 
   m->menu_num = menu_num;
   if(menu_num < 0) menu_num = 1;
+
   m->str = (char**)malloc(sizeof(char*)*menu_num);
   for(i = 0; i < menu_num; i++) {
     m->str[i] = (char*)calloc(sizeof(char), 20);
   }
+
+  select = 0;
 }
 
 void setMenuStr(Menu* m, int set_num, char* str) {
