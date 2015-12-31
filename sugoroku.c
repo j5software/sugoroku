@@ -19,6 +19,9 @@ void sugorokuMain(Sugoroku* sugoroku) {
   int end_flag = 1;
   initSugoroku(sugoroku, 4);
   readMap(&sugoroku->map, "./map.dat");
+  Menu main_menu;
+  initMainMenu(&main_menu);
+  mvprintw(10, 10, "%s", main_menu.str[3]);
   while(1) {
     readKey();
     dispmap(&sugoroku->map);
@@ -50,8 +53,16 @@ void sugorokuMain(Sugoroku* sugoroku) {
       break;
     }
   }*/
+  deleteMenu(&main_menu);
 }
 
+void initMainMenu(Menu* main_menu) {
+  initMenu(main_menu, 4);
+  setMenuStr(main_menu, 0, "Throw dice");
+  setMenuStr(main_menu, 1, "Item");
+  setMenuStr(main_menu, 2, "Save");
+  setMenuStr(main_menu, 3, "Quit game");
+}
 
 void importItemFile(Sugoroku* sugoroku)
 {

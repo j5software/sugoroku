@@ -1,6 +1,7 @@
 #ifndef __SUGOROKU_H__
 #define __SUGOROKU_H__
 #include "item.h"
+#include "menu.h"
 #include "map.h"
 #include "player.h"
 #include "bass.h"
@@ -15,6 +16,8 @@ typedef struct Sugoroku {
 } Sugoroku;
 
 void initSugoroku(Sugoroku* s, int player_num);
+void importItemFile(Sugoroku* sugoroku);
 void sugorokuMain(Sugoroku* s);
+void initMainMenu(Menu* main_menu);
 
 #endif
