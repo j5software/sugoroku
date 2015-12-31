@@ -1,12 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 #include "bag.h"
-
-typedef struct Position {
-  int x;
-  int y;
-} Position;
-
+#include "position.h"
 
 typedef struct Player {
   int player_num;
