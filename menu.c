@@ -13,7 +13,7 @@ void initMenu(Menu *m, int menu_num) {
     m->str[i] = (char*)calloc(sizeof(char), 20);
   }
 
-  select = 0;
+  m->select = 0;
 }
 
 void setMenuStr(Menu* m, int set_num, char* str) {
