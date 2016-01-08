@@ -1,20 +1,16 @@
 #include "action.h"
+#include "menu.h"
 #include <ncurses.h>
 
-int current_key = 0;
-
-void readKey() {
-  current_key = getch();
-}
-
-void selectAction() {
-  /*
+void selectAction(int current_key, Menu* m) {
   switch(current_key) {
   case KEY_UP:
-    selection = (selection-1)%4; // ←ゴミ
+    moveMenuUp(m);
     break;
   case KEY_DOWN:
-    selection = (selection+1)%4;
+    moveMenuDown(m);
     break;
-  }*/
+  }
 }
+
+

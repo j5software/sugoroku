@@ -3,8 +3,8 @@
 
 typedef struct Item
 {
-  char name[20];
   int id;
+  char name[20];
 } Item;
 
 void initItem(Item *i);

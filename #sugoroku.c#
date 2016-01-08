@@ -29,7 +29,7 @@ void sugorokuMain(Sugoroku* sugoroku) {
     selectAction(current_key, &main_menu);
     dispmap(&sugoroku->map);
     if(current_key == 'q') break;
-    if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
+    if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select); //check
   }
  /*
   while(end_flag) {

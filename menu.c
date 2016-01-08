@@ -28,3 +28,18 @@ void deleteMenu(Menu* m) {
   }
   free(m->str);
 }
+
+void moveMenuUp(Menu* m) {
+  m->select = m->select-1;
+  if(m->select < 0) {
+    m->select += m->menu_num;
+  }
+  m->select = m->select%4;
+}
+
+void moveMenuDown(Menu* m) {
+  m->select = (m->select+1)%4;
+}
+
+
+    
