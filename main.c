@@ -1,4 +1,6 @@
 #include "init.h"
+#include "position.h"
+#include <stdio.h>
 
 int main(void) {
   Sugoroku sugoroku;
@@ -7,5 +9,6 @@ int main(void) {
   sugorokuMain(&sugoroku);
 
   endwin();
+
   return 0;
 }

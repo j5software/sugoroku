@@ -4,7 +4,6 @@
 
 void initCurses() {
   setlocale(LC_ALL,"");
-  //setlocale( LC_CTYPE, "" );
   initscr();
   curs_set(0);
   noecho();

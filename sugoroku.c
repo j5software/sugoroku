@@ -1,7 +1,8 @@
 #include "sugoroku.h"
-#include "dispmap.h"
 #include <stdlib.h>
 #include <ncurses.h>
+#include "dispmap.h"
+#include "scene.h"
 
 void initSugoroku(Sugoroku* s, int player_num) {
   int i;
@@ -17,19 +18,20 @@ void initSugoroku(Sugoroku* s, int player_num) {
 void sugorokuMain(Sugoroku* sugoroku) {
   int i= 0;
   int current_key = 0;
-  int scene = 0;
-  int end_flag = 1;
+  enum Scene scene = s_field;
+  int end_flag = 0;
+
   initSugoroku(sugoroku, 4);
   readMap(&sugoroku->map, "./map.dat");
   Menu main_menu;
   initMainMenu(&main_menu);
   mvprintw(10, 10, "%s", main_menu.str[3]);
-  while(1) {
-    dispmap(&sugoroku->map, 1, 1, sugoroku->player, 4, 4);
+  while(!end_flag) {
+    dispmap(&sugoroku->map, 0, 0, sugoroku->player, 4, 4);
     current_key = getch();
+    if(current_key == 'q') end_flag = 1;
     selectAction(current_key, &main_menu);
-    if(current_key == 'q') break;
-    if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
+    //if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
   }
  /*
   while(end_flag) {
