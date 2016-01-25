@@ -1,6 +1,8 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
+#include "player.h"
+
 typedef struct Item
 {
   int id;
@@ -8,8 +10,8 @@ typedef struct Item
 } Item;
 
 void initItem(Item *i);
-void useItem1();
-void useItem2();
+void useItem1(Player *p, int player_num);
+void useItem2(Player *p, int get_player, int player_maxnum);
 void useItem3();
 void useItem4();
 void useItem5();
