@@ -1,4 +1,4 @@
-#include "Map.h"
+#include "map.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
