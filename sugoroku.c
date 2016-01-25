@@ -24,9 +24,9 @@ void sugorokuMain(Sugoroku* sugoroku) {
   mvprintw(10, 10, "%s", main_menu.str[3]);
   while(1) {
     readKey();
-    dispmap(&sugoroku->map);
+    dispmap(&sugoroku->map, 1, 1, sugoroku->player, 4, 4);
     if(current_key == 'q') break;
-    //mvprintw(0, 0, "あ");
+    if(current_key == 'a') mvprintw(0, 0, "あ");
   }
  /*
   while(end_flag) {
