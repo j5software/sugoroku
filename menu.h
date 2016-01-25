@@ -10,5 +10,7 @@ typedef struct Menu {
 void initMenu(Menu* m, int menu_num);
 void setMenuStr(Menu* m, int set_num, char* str);
 void deleteMenu(Menu* m);
+void moveMenuUp(Menu* m);
+void moveMenuDown(Menu* m);
 
 #endif
