@@ -1,21 +1,39 @@
 #include "item.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 void initItem(Item *i) {
   i->name[0] = '\0';
   i->id = 0;
 }
 
-void useItem1() {
+void useItem1(Player *p, int player_num) {
   //お金増やす
+  srand((unsigned)time(NULL));
+  int num;
+  num = rand()%10 + 1;
+  p[player_num].money += 1000*num;
 }
 
-void useItem2() {
-  //他のプレイヤーのお金を奪う
-  //奪う対象をランダムにするか，選択にするか
+void useItem2(Player *p, int get_player, int player_maxnum) {
+  //ランダムに他のプレイヤーのお金を三割を奪う
+  srand((unsigned)time(NULL));
+  while (1) {
+    int stolen_player; //お金を奪われるプレイヤーの番号
+    int stolen_money;  //プレイヤーの奪われるお金（所持金の三割）
+    stolen_player = rand()%player_maxnum;
+    if (stolen_player != get_player) {
+      stolen_money = p[stolen_player].money * 0.3;
+      p[stolen_player].money -= stolen_money;
+      p[get_player].money += stolen_money;
+      break;
+    }
+  }
 }
 
 void useItem3() {
-  //スタートとゴールは逆にする
+  //スタートとゴールを逆にする
 }
 
 void useItem4() {
