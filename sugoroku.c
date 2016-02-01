@@ -24,13 +24,11 @@ void sugorokuMain(Sugoroku* sugoroku) {
   Menu main_menu;
   initMainMenu(&main_menu);
   mvprintw(10, 10, "%s", main_menu.str[3]);
-  ////////////////////////////////
-  dispmenu(&main_menu, 11, 10); //
-  ////////////////////////////////
+  Position pos;
+  pos.x = 0; pos.y = 0;
   while(1) {
-    //dispmap(&sugoroku->map, 1, 1, sugoroku->player, 4, 4);
-    current_key = getch();
-    selectAction(current_key, &main_menu);
+    readKey();
+    dispmap(&sugoroku->map, 5, 40, &sugoroku->player[0], &pos, 5, 5);
     if(current_key == 'q') break;
     if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
   }
