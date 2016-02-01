@@ -1,8 +1,6 @@
 #include "sugoroku.h"
 #include <stdlib.h>
-#include <ncurses.h>
-#include "dispmap.h"
-#include "scene.h"
+#include <stdio.h>
 
 void initSugoroku(Sugoroku* s, int player_num) {
   int i;
@@ -15,51 +13,6 @@ void initSugoroku(Sugoroku* s, int player_num) {
   // ここにitemの初期化を入れる？
 }
 
-void sugorokuMain(Sugoroku* sugoroku) {
-  int i= 0;
-  int current_key = 0;
-  enum Scene scene = s_field;
-  int end_flag = 0;
-
-  initSugoroku(sugoroku, 4);
-  readMap(&sugoroku->map, "./map.dat");
-  Menu main_menu;
-  initMainMenu(&main_menu);
-  mvprintw(10, 10, "%s", main_menu.str[3]);
-  while(!end_flag) {
-    dispmap(&sugoroku->map, 0, 0, sugoroku->player, 4, 4);
-    current_key = getch();
-    if(current_key == 'q') end_flag = 1;
-    selectAction(current_key, &main_menu);
-    //if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
-  }
- /*
-  while(end_flag) {
-    readkey();
-    render();
-    switch(scene) {
-    case 0:
-      selectAction();
-      break;
-    case 1:
-      useItemAction();
-      break;
-    case 2:
-      throwDice();
-      break;
-    case 3:
-      getmove();
-      break;
-    case 4:
-      panelAction();
-      break;
-    case 5:
-      end_flag = judgeGoal();
-      break;
-    }
-  }*/
-  deleteMenu(&main_menu);
-}
 
 void initMainMenu(Menu* main_menu) {
   initMenu(main_menu, 4);

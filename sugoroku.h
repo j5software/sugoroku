@@ -4,8 +4,6 @@
 #include "menu.h"
 #include "map.h"
 #include "player.h"
-#include "bass.h"
-#include "action.h"
 
 typedef struct Sugoroku {
   Player* player; // プレイヤー全員(配列)
@@ -17,7 +15,6 @@ typedef struct Sugoroku {
 
 void initSugoroku(Sugoroku* s, int player_num);
 void importItemFile(Sugoroku* sugoroku);
-void sugorokuMain(Sugoroku* s);
 void initMainMenu(Menu* main_menu);
 
 #endif

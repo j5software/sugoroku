@@ -1,5 +1,5 @@
 #include "init.h"
-#include "position.h"
+#include "sugorokuMain.h"
 #include <stdio.h>
 
 int main(void) {
