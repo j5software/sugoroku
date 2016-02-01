@@ -15,11 +15,6 @@ int throwDice(void)
   return num;
 }
 
-void movePlayer(Player *p, Map *m)
-{
-
-}
-
 void openBag(void)
 {
 

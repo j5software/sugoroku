@@ -34,3 +34,12 @@ void clearPosition(PositionList* l) {
     free(old);
   }
 }
+
+// lの中にpの座標が存在してたら1を返す
+int isExistPosition(PositionList* l, Position p) {
+  PositionNode* ptr = l->begin;
+  for(; ptr != NULL; ptr = ptr->next) {
+    if(ptr->pos.x == p.x && ptr->pos.y == p.y) return 1;
+  }
+  return 0;
+}

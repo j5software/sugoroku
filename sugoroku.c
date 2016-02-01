@@ -35,7 +35,7 @@ void importItemFile(Sugoroku* sugoroku)
 
   if (fp) {
     sugoroku->item_num = 0;
-    while ((c = getc(fp)) != EOF) {
+    while (c = getc(fp) != EOF) {
       if (c == '\n') {
         sugoroku->item_num++;
       }
@@ -50,4 +50,40 @@ void importItemFile(Sugoroku* sugoroku)
   }
 
   fclose(fp);
+}
+
+// pの座標に移動可能か
+int canMove(Map *m, Position p) {
+  if(m->field[p.y][p.x] == 0) return 0;
+  return 1;
+}
+
+// 動かすのに成功したら1、失敗したら0を返す
+int movePlayer(Sugoroku* s, int player_id, enum Direction d, PositionList* plist) {
+  if(player_id >= s->player_num || player_id < 0) {
+    puts("player番号が頭おかしい");
+    return 0;
+  }
+  Position pos = s->player[player_id].pos;
+  Position mpos = pos; // 目的の場所
+  if(isExistPosition(plist, mpos)) return 0; // 既に行ったことがある場所だったら行かない
+  switch(d) {
+  case UP:
+    mpos.y--;
+    if(mpos.y < 0 || !canMove(&s->map, mpos)) return 0;
+    break;
+  case RIGHT:
+    mpos.x++;
+    if(mpos.x >= s->map.width || !canMove(&s->map, mpos)) return 0;
+    break;
+  case DOWN:
+    mpos.y++;
+    if(mpos.y >= s->map.height || !canMove(&s->map, mpos)) return 0;
+    break;
+  case LEFT:
+    mpos.x--;
+    if(mpos.x < 0 || !canMove(&s->map, mpos)) return 0;
+    break;
+  }
+  return 1;
 }

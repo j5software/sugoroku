@@ -1,6 +1,10 @@
 #ifndef __POSITION_H__
 #define __POSITION_H__
 
+enum Direction {
+  UP,RIGHT,DOWN,LEFT
+};
+
 typedef struct Position {
   int x;
   int y;
@@ -21,5 +25,6 @@ void initPosition(Position* p);
 void initPositionList(PositionList* l);
 void pushPosition(PositionList* l, Position p);
 void clearPosition(PositionList* l);
+int isExistPosition(PositionList* l, Position p);
 
 #endif

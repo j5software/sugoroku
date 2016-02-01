@@ -16,5 +16,7 @@ typedef struct Sugoroku {
 void initSugoroku(Sugoroku* s, int player_num);
 void importItemFile(Sugoroku* sugoroku);
 void initMainMenu(Menu* main_menu);
+int canMove(Map *m, Position p);
+int movePlayer(Sugoroku*, int player_id, enum Direction d, PositionList*);
 
 #endif

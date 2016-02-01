@@ -34,10 +34,10 @@ void sugorokuMain(Sugoroku* sugoroku) {
       useItemAction();
       break;
     case S_THROWDICE:
-      throwDice();
+      dice = throwDice();
       break;
     case S_MOVE:
-      getmove();
+      getmove(dice);
       end_flag = judgeGoal(); //?
       break;
     case S_PANELACTION
