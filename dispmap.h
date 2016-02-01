@@ -6,7 +6,7 @@
 #include "position.h"
 #include "map.h"
 
-int dispmap(Map* s, int x, int y, Player* p, int width, int height);
-//int disp_map(Map* s, int x, int y, Position p, int width, int height);
+//int dispmap(Map* s, int x, int y, Player* p, int width, int height);
+int dispmap(Map* m, int x, int y, Player* p, Position* pos, int width, int height);
 
 #endif
