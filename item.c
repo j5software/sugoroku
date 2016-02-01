@@ -1,5 +1,5 @@
 #include "item.h"
-
+#include <ncurses.h>
 #include <stdlib.h>
 
 void initItem(Item *i) {
@@ -73,7 +73,7 @@ void useItem8() {
   //他のプレイヤーを1回休みにする
 }
 
-void useItem9(Player　*p) {
+void useItem9(Player *p) {
   //お金を払った分だけマスを進む
   int pay_money;
   printw("お金を払った分だけ進むことができます．(最大5マス)");
