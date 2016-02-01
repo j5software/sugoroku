@@ -22,9 +22,11 @@ void sugorokuMain(Sugoroku* sugoroku) {
   Menu main_menu;
   initMainMenu(&main_menu);
   mvprintw(10, 10, "%s", main_menu.str[3]);
+  Position pos;
+  pos.x = 0; pos.y = 0;
   while(1) {
     readKey();
-    dispmap(&sugoroku->map);
+    dispmap(&sugoroku->map, 5, 40, &sugoroku->player[0], &pos, 5, 5);
     if(current_key == 'q') break;
     //mvprintw(0, 0, "あ");
   }
