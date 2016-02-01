@@ -66,7 +66,7 @@ void useItem6() {
 
 void useItem7(double *rate) {
   //サイコロの出た目を2倍にする
-  rate = 2.0;
+  *rate = 2.0;
 }
 
 void useItem8() {
@@ -76,7 +76,7 @@ void useItem8() {
 void useItem9(Player　*p) {
   //お金を払った分だけマスを進む
   int pay_money;
-  printw("お金を払った分だけ進むことができます．(最大5マス)")；
+  printw("お金を払った分だけ進むことができます．(最大5マス)");
   scanw("%d", &pay_money);
   p->money -= pay_money;
   //あとまわし
