@@ -1,6 +1,5 @@
 #include "sugorokuMain.h"
 #include <ncurses.h>
-#include "bass.h"
 #include "action.h"
 #include "dispmap.h"
 

@@ -35,7 +35,8 @@ void importItemFile(Sugoroku* sugoroku)
 
   if (fp) {
     sugoroku->item_num = 0;
-    while (c = getc(fp) != EOF) {
+    c = getc(fp);
+    while (c != EOF) {
       if (c == '\n') {
         sugoroku->item_num++;
       }
