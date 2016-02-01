@@ -13,7 +13,6 @@ void initSugoroku(Sugoroku* s, int player_num) {
   // ここにitemの初期化を入れる？
 }
 
-
 void initMainMenu(Menu* main_menu) {
   initMenu(main_menu, 4);
   setMenuStr(main_menu, 0, "Throw dice");
