@@ -8,7 +8,7 @@ void initItem(Item *i) {
 }
 
 void useItem1(Player *p, int player_num) {
-  //お金増やす
+  //おこづかい：お金増やす
   int get_money;
   get_money = (rand()%10 + 1) * 1000;
   p[player_num].money += get_money;
@@ -16,7 +16,7 @@ void useItem1(Player *p, int player_num) {
 }
 
 void useItem2(Player *p, int get_player, int player_maxnum) {
-  //ランダムに他のプレイヤーのお金を三割を奪う
+  //ごうだつ：ランダムに他のプレイヤーのお金を三割を奪う
   while (1) {
     int stolen_player; //お金を奪われるプレイヤーの番号
     int stolen_money;  //プレイヤーの奪われるお金（所持金の三割）
@@ -34,7 +34,8 @@ void useItem2(Player *p, int get_player, int player_maxnum) {
 }
 
 void useItem3() {
-  //スタートとゴールを逆にする
+  //ぎゃくてんスイッチ：スタートとゴールを逆にする
+  //プレイヤーの進む方向を変更する
 }
 
 void useItem4(Player *p, int player_num) {
@@ -63,16 +64,22 @@ void useItem6() {
   //SHOPのマスじゃないけどSHOPを開く
 }
 
-void useItem7() {
+void useItem7(double *rate) {
   //サイコロの出た目を2倍にする
+  rate = 2.0;
 }
 
 void useItem8() {
   //他のプレイヤーを1回休みにする
 }
 
-void useItem9() {
+void useItem9(Player　*p) {
   //お金を払った分だけマスを進む
+  int pay_money;
+  printw("お金を払った分だけ進むことができます．(最大5マス)")；
+  scanw("%d", &pay_money);
+  p->money -= pay_money;
+  //あとまわし
 }
 
 void useItem10() {
