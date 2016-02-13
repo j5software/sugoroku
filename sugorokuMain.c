@@ -14,8 +14,10 @@ void sugorokuMain(Sugoroku* sugoroku) {
   Menu main_menu;
   initMainMenu(&main_menu);
   mvprintw(10, 10, "%s", main_menu.str[3]);
+  Position p;
+  p.x = 1, p.y = 0;
   while(!end_flag) {
-    dispmap(&sugoroku->map, 0, 0, sugoroku->player, 4, 4);
+    dispmap(&sugoroku->map, sugoroku->player, 1, 3, p, 10, 10);
     current_key = getch();
     if(current_key == 'q') end_flag = 1;
     selectAction(current_key, &main_menu);
