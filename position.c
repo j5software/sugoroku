@@ -22,7 +22,20 @@ void pushPosition(PositionList* l, Position p) {
   l->end->next = (PositionNode*)malloc(sizeof(PositionNode)*1);
   l->end->next->prev = l->end;
   l->end = l->end->next;
+  l->end->next = NULL;
   l->end->pos = p;
+}
+
+void popPosition(PositionList* l) {
+  if(l->end == NULL) return;
+  if(l->end == l->begin) {
+    free(l->end);
+    l->end = l->begin = NULL;
+    return;
+  }
+  l->end = l->end->prev;
+  free(l->end->next);
+  l->end->next = NULL;
 }
 
 void clearPosition(PositionList* l) {
@@ -39,7 +52,12 @@ void clearPosition(PositionList* l) {
 int isExistPosition(PositionList* l, Position p) {
   PositionNode* ptr = l->begin;
   for(; ptr != NULL; ptr = ptr->next) {
-    if(ptr->pos.x == p.x && ptr->pos.y == p.y) return 1;
+    if(isPositionEqual(ptr->pos, p)) return 1;
   }
+  return 0;
+}
+
+int isPositionEqual(Position p1, Position p2) {
+  if(p1.x == p2.x && p1.y == p2.y) return 1;
   return 0;
 }

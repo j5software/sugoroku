@@ -2,28 +2,50 @@
 #include <ncurses.h>
 #include "action.h"
 #include "disp.h"
+#include "init.h"
 
-void sugorokuMain(Sugoroku* sugoroku) {
-  int i= 0;
+int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, DispOption *doption, int current_key) {
+  switch(*scene) {
+  case S_FIELD:
+    break;
+  case S_USEITEM:
+    break;
+  case S_THROWDICE:
+    break;
+  case S_MOVE:
+    moveAction(current_key, sugoroku, sstatus, sstatus->current_player);
+    break;
+  case S_PANELACTION:
+    break;
+  case S_RESULT:
+    break;
+  }
+  display(sugoroku, sstatus, *scene, doption);
+  return 1;
+}
+
+void sugorokuMain(Sugoroku *sugoroku) {
   int current_key = 0;
   int end_flag = 0;
-  Scene scene = S_FIELD;
+  Scene scene = S_MOVE;
   SugorokuStatus sstatus;
   DispOption doption;
+  Menu main_menu;
 
   if(!initSugoroku(sugoroku, 4)) return;
   initCurses();
-  Menu main_menu;
   initMainMenu(&main_menu);
-
   initSugorokuStatus(&sstatus);
   initDispOption(&doption);
-  doption.map_h = doption.map_w = 10; // 表示するマップの範囲は10*10
+  doption.map_w = 15; // 表示するマップの範囲は15*11
+  doption.map_h = 11;
+  doption.std_x = 5; // 表示するマップの範囲は15*11
+  doption.std_y = 3;
+
   while(!end_flag) {
     current_key = getch();
-    display(sugoroku, &sstatus, scene, doption);
-    //dispmap(&sugoroku->map, sugoroku->player, 1, 3, p, 10, 10);
-    if(current_key == 'q') end_flag = 1;
+    if(current_key == 'q') break;
+    sceneProcess(sugoroku, &scene, &sstatus, &doption, current_key);
     selectAction(current_key, &main_menu);
     //if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
   }

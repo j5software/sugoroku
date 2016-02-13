@@ -11,6 +11,6 @@ typedef struct DispOption {
 } DispOption;
 
 void initDispOption(DispOption *doption);
-int display(Sugoroku *sugoroku, SugorokuStatus *ss, Scene scene, DispOption doption);
+int display(Sugoroku *sugoroku, SugorokuStatus *ss, Scene scene, DispOption *doption);
 
 #endif

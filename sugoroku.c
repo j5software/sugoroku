@@ -9,16 +9,16 @@ int initSugoroku(Sugoroku* s, int player_num) {
   for(i = 0; i < player_num; i++) {
     initPlayer(&(s->player[i]), i);
   }
-  // ここにmapの初期化を入れる？
   if(!readMap(&s->map, "./map.dat")) return 0;
-  // ここにitemの初期化を入れる？
   if(!importItemFile(s, "./ITEM.csv")) return 0;
+  if(!setPlayerStart(s)) return 0;
 
   return 1;
 }
 
 void initSugorokuStatus(SugorokuStatus *ss) {
   ss->current_player = 0;
+  initPositionList(&ss->plist);
 }
 
 void initMainMenu(Menu* main_menu) {
@@ -73,7 +73,6 @@ int movePlayer(Sugoroku* s, int player_id, enum Direction d, PositionList* plist
   }
   Position pos = s->player[player_id].pos;
   Position mpos = pos; // 目的の場所
-  if(isExistPosition(plist, mpos)) return 0; // 既に行ったことがある場所だったら行かない
   switch(d) {
   case UP:
     mpos.y--;
@@ -92,5 +91,40 @@ int movePlayer(Sugoroku* s, int player_id, enum Direction d, PositionList* plist
     if(mpos.x < 0 || !canMove(&s->map, mpos)) return 0;
     break;
   }
+
+  // 既に行ったことがある場所だったら行かない
+  // 一個前のとこに戻ることは出来る
+  if(isExistPosition(plist, mpos)) {
+    if(isPositionEqual(plist->end->pos, mpos)) {
+      // 進める数を一つ戻す
+      s->player[player_id].pos = mpos;
+      popPosition(plist);
+    } else {
+      return 0;
+    }
+  } else {
+    s->player[player_id].pos = mpos;
+    pushPosition(plist, pos);
+  }
   return 1;
+}
+
+// 全てのプレイヤーをスタートの位置に移動
+int setPlayerStart(Sugoroku* s) {
+  int i, j, k;
+
+  for(i = 0; i < s->map.height; i++) {
+    for(j = 0; j < s->map.width; j++) {
+      if(s->map.field[i][j] == START) {
+        for(k = 0; k < s->player_num; k++) {
+          s->player[k].pos.x = j;
+          s->player[k].pos.y = i;
+          return 1;
+        }
+      }
+    }
+  }
+
+  // スタートが無かったとき
+  return 0;
 }

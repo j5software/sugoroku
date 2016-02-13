@@ -77,7 +77,7 @@ int dispmap(Map* m, Player* p, int player_num, int x, int y, Position pos, int w
       for (k = 0; k < 4; k++) {
         for (l = 0; l < 5; l++) {
           attrset(0);
-          if (m->field[i][j] == 0 || i < 0 || i >= m->height || j < 0 || j >= m->width) {
+          if (i < 0 || i >= m->height || j < 0 || j >= m->width || m->field[i][j] == 0 ) {
             mvprintw(y+k+4*(i-pos.y),x+l+5*(j-pos.x)," ");
           }
           else {

@@ -6,6 +6,13 @@ typedef struct Map{
   int width, height;
 } Map;
 
+typedef enum MasuNum {
+  VOID = 0,
+  EMPTY = 1,
+  START = 2,
+  GOAL = 3,
+} MasuNum;
+
 int readMap(Map* p, char* dir);
 void initMap(Map* h, int width, int height); // 直接使うことはないかも
 
