@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include <time.h>
 
-int dispmap(Map* m, Player* p, int x, int y, Position pos, int width, int height)
+int dispmap(Map* m, Player* p, int player_num, int x, int y, Position pos, int width, int height)
 {
   int i,j;
   int k,l;
@@ -66,8 +66,10 @@ int dispmap(Map* m, Player* p, int x, int y, Position pos, int width, int height
 
 
         /* プレイヤー位置 */
-        if (i == p->pos.y && j == p->pos.x) {
-          temp[2][2] = '@';
+        for (k = 0; k < player_num; k++) {
+          if (i == p[k].pos.y && j == p[k].pos.x) {
+            temp[2][2] = '@';
+          }
         }
       }
 
@@ -85,6 +87,5 @@ int dispmap(Map* m, Player* p, int x, int y, Position pos, int width, int height
       }
     }
   }
-  refresh();
   return 1;
 }
