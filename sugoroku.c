@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void initSugoroku(Sugoroku* s, int player_num) {
+int initSugoroku(Sugoroku* s, int player_num) {
   int i;
   s->player_num = player_num;
   s->player = (Player *)malloc(sizeof(Player)*player_num);
@@ -10,7 +10,15 @@ void initSugoroku(Sugoroku* s, int player_num) {
     initPlayer(&(s->player[i]), i);
   }
   // ここにmapの初期化を入れる？
+  if(!readMap(&s->map, "./map.dat")) return 0;
   // ここにitemの初期化を入れる？
+  if(!importItemFile(s, "./ITEM.csv")) return 0;
+
+  return 1;
+}
+
+void initSugorokuStatus(SugorokuStatus *ss) {
+  ss->current_player = 0;
 }
 
 void initMainMenu(Menu* main_menu) {
@@ -21,35 +29,34 @@ void initMainMenu(Menu* main_menu) {
   setMenuStr(main_menu, 3, "Quit game");
 }
 
-void importItemFile(Sugoroku* sugoroku)
+int importItemFile(Sugoroku* sugoroku, char* dir)
 {
   FILE *fp;
   int i;
   int c;
 
-  if ((fp = fopen("item.csv", "r")) != NULL) {
-    printf("can't open file.\n");
-    exit(1);
+  if ((fp = fopen(dir, "r")) == NULL) {
+    printf("can't open item file.\n");
+    return 0;
   }
 
-  if (fp) {
-    sugoroku->item_num = 0;
+  sugoroku->item_num = 0;
+  do {
     c = getc(fp);
-    while (c != EOF) {
-      if (c == '\n') {
-        sugoroku->item_num++;
-      }
+    if (c == '\n') {
+      sugoroku->item_num++;
     }
+  } while (c != EOF);
 
-    sugoroku->item = (Item *)malloc((sizeof(Item)* sugoroku->item_num));
+  sugoroku->item = (Item *)malloc((sizeof(Item)* sugoroku->item_num));
 
-    for (i = 0; i < sugoroku->item_num; i++) {
-      fscanf(fp, "%d, %s\n", &sugoroku->item[i].id,  sugoroku->item[i].name);
-    }
-
+  for (i = 0; i < sugoroku->item_num; i++) {
+    fscanf(fp, "%d, %s\n", &sugoroku->item[i].id,  sugoroku->item[i].name);
   }
+
 
   fclose(fp);
+  return 1;
 }
 
 // pの座標に移動可能か

@@ -14,7 +14,7 @@ void initMap(Map* h, int width, int height) {
   }
 }
 
-void readMap(Map* p, char* dir) {
+int readMap(Map* p, char* dir) {
   FILE* fp;
   int ch = 0;
   int x, y;
@@ -22,7 +22,7 @@ void readMap(Map* p, char* dir) {
   fp = fopen(dir, "rb");
   if(fp == NULL) {
     printf("Can't open Map file.");
-    return;
+    return 0;
   }
   fscanf(fp, "%d", &p->width);
   fscanf(fp, "%d", &p->height);
@@ -36,4 +36,5 @@ void readMap(Map* p, char* dir) {
   }
 
   fclose(fp);
+  return 1;
 }

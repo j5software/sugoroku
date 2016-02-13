@@ -6,7 +6,7 @@ typedef struct Map{
   int width, height;
 } Map;
 
-void readMap(Map* p, char* dir);
+int readMap(Map* p, char* dir);
 void initMap(Map* h, int width, int height); // 直接使うことはないかも
 
 #endif

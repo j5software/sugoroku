@@ -13,8 +13,13 @@ typedef struct Sugoroku {
   int player_num; // プレイヤーの人数
 } Sugoroku;
 
-void initSugoroku(Sugoroku* s, int player_num);
-void importItemFile(Sugoroku* sugoroku);
+typedef struct SugorokuStatus {
+  int current_player;
+} SugorokuStatus;
+
+int initSugoroku(Sugoroku* s, int player_num);
+void initSugorokuStatus(SugorokuStatus *ss);
+int importItemFile(Sugoroku* sugoroku, char *dir);
 void initMainMenu(Menu* main_menu);
 int canMove(Map *m, Position p);
 int movePlayer(Sugoroku*, int player_id, enum Direction d, PositionList*);
