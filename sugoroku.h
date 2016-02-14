@@ -16,15 +16,15 @@ typedef struct Sugoroku {
 typedef struct SugorokuStatus {
   int current_player;
   int move_num; // 動かせる回数
+  double dice_rate;
   PositionList plist;
 } SugorokuStatus;
 
 int initSugoroku(Sugoroku* s, int player_num);
 void initSugorokuStatus(SugorokuStatus *ss);
 int importItemFile(Sugoroku* sugoroku, char *dir);
-void initMainMenu(Menu* main_menu);
 int canMove(Map *m, Position p);
-int movePlayer(Sugoroku*, int player_id, enum Direction d, PositionList*);
+int movePlayer(Sugoroku*, int player_id, enum Direction d, PositionList*, SugorokuStatus *ss);
 int setPlayerStart(Sugoroku* s);
 
 #endif

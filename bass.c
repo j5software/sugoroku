@@ -5,15 +5,6 @@
 #include "init.h"
 #include "map.h"
 
-int throwDice(double rate)
-{
-  int num;
-
-  srand((unsigned)time(NULL));
-  num = rand() % 6 + 1;
-
-  return num * rate;
-}
 
 void openBag(void)
 {

@@ -5,7 +5,7 @@ typedef enum Scene {
   S_FIELD,
   S_USEITEM,
   S_THROWDICE,
-  S_PANELACTION,
+  S_PANELEVENT,
   S_MOVE,
   S_RESULT
 } Scene;

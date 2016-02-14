@@ -46,6 +46,8 @@ void clearPosition(PositionList* l) {
     ptr = ptr->next;
     free(old);
   }
+  l->begin = NULL;
+  l->end = NULL;
 }
 
 // lの中にpの座標が存在してたら1を返す

@@ -5,6 +5,5 @@
 #include "position.h"
 #include "menu.h"
 
-int dispmenu(Menu* m, int x, int y);
 
 #endif

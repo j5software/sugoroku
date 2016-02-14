@@ -7,10 +7,26 @@ typedef struct Menu {
   int select; // 選択している場所
 } Menu;
 
-void initMenu(Menu* m, int menu_num);
-void setMenuStr(Menu* m, int set_num, char* str);
-void deleteMenu(Menu* m);
-void moveMenuUp(Menu* m);
-void moveMenuDown(Menu* m);
+// 実際に使うのはこっちか
+typedef struct MyMenu {
+  Menu main_menu;
+  Menu *item_menu; // 配列[プレイヤー人数]
+} MyMenu;
+
+enum MainMenu {
+  MM_THROWDICE,
+  MM_ITEM,
+  MM_SAVE,
+  MM_QUIT
+};
+
+void initMenu(Menu *m, int menu_num);
+void initMainMenu(Menu *main_menu);
+void initMyMenu(MyMenu *m, int player_num);
+void deleteMyMenu(MyMenu *m, int player_num);
+void setMenuStr(Menu *m, int set_num, char* str);
+void deleteMenu(Menu *m);
+void moveMenuUp(Menu *m);
+void moveMenuDown(Menu *m);
 
 #endif

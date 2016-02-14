@@ -3,7 +3,6 @@
 #include "bag.h"
 #include "player.h"
 
-int throwDice(void);
 void openBag(void);
 void openMenu(void);
 void selectMenu(void);

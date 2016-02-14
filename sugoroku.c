@@ -19,15 +19,8 @@ int initSugoroku(Sugoroku* s, int player_num) {
 void initSugorokuStatus(SugorokuStatus *ss) {
   ss->current_player = 0;
   ss->move_num = 0;
+  ss->dice_rate = 1.0;
   initPositionList(&ss->plist);
-}
-
-void initMainMenu(Menu* main_menu) {
-  initMenu(main_menu, 4);
-  setMenuStr(main_menu, 0, "Throw dice");
-  setMenuStr(main_menu, 1, "Item");
-  setMenuStr(main_menu, 2, "Save");
-  setMenuStr(main_menu, 3, "Quit game");
 }
 
 int importItemFile(Sugoroku* sugoroku, char* dir)
@@ -67,7 +60,7 @@ int canMove(Map *m, Position p) {
 }
 
 // 動かすのに成功したら1、失敗したら0を返す
-int movePlayer(Sugoroku* s, int player_id, enum Direction d, PositionList* plist) {
+int movePlayer(Sugoroku *s, int player_id, enum Direction d, PositionList *plist, SugorokuStatus *ss) {
   if(player_id >= s->player_num || player_id < 0) {
     puts("player番号が頭おかしい");
     return 0;
@@ -98,12 +91,14 @@ int movePlayer(Sugoroku* s, int player_id, enum Direction d, PositionList* plist
   if(isExistPosition(plist, mpos)) {
     if(isPositionEqual(plist->end->pos, mpos)) {
       // 進める数を一つ戻す
+      ss->move_num++;
       s->player[player_id].pos = mpos;
       popPosition(plist);
     } else {
       return 0;
     }
   } else {
+    ss->move_num--;
     s->player[player_id].pos = mpos;
     pushPosition(plist, pos);
   }
@@ -120,8 +115,9 @@ int setPlayerStart(Sugoroku* s) {
         for(k = 0; k < s->player_num; k++) {
           s->player[k].pos.x = j;
           s->player[k].pos.y = i;
-          return 1;
         }
+        if(k > 0)
+          return 1;
       }
     }
   }
