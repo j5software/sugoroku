@@ -27,7 +27,7 @@ int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, Disp
 void sugorokuMain(Sugoroku *sugoroku) {
   int current_key = 0;
   int end_flag = 0;
-  Scene scene = S_MOVE;
+  Scene scene = S_FIELD;
   SugorokuStatus sstatus;
   DispOption doption;
   Menu main_menu;
@@ -39,7 +39,7 @@ void sugorokuMain(Sugoroku *sugoroku) {
   initDispOption(&doption);
   doption.map_w = 15; // 表示するマップの範囲は15*11
   doption.map_h = 11;
-  doption.std_x = 5; // 表示するマップの範囲は15*11
+  doption.std_x = 5;
   doption.std_y = 3;
 
   while(!end_flag) {

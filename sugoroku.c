@@ -18,6 +18,7 @@ int initSugoroku(Sugoroku* s, int player_num) {
 
 void initSugorokuStatus(SugorokuStatus *ss) {
   ss->current_player = 0;
+  ss->move_num = 0;
   initPositionList(&ss->plist);
 }
 

@@ -15,6 +15,7 @@ typedef struct Sugoroku {
 
 typedef struct SugorokuStatus {
   int current_player;
+  int move_num; // 動かせる回数
   PositionList plist;
 } SugorokuStatus;
 
