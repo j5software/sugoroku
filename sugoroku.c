@@ -125,3 +125,21 @@ int setPlayerStart(Sugoroku* s) {
   // スタートが無かったとき
   return 0;
 }
+
+int nextPlayer(Sugoroku *s, SugorokuStatus *ss) {
+  if(s->player_num <= 1) {
+    if(s->player[0].is_goal) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+  int i = (ss->current_player+1)%s->player_num;
+  for(; i != ss->current_player; i = (i+1)%s->player_num) {
+    if(!s->player[i].is_goal) {
+      ss->current_player = i;
+      return 1;
+    }
+  }
+  return 0;
+}

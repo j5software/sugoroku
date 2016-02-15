@@ -6,21 +6,30 @@
 void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene) {
   Position ppos = s->player[player_id].pos;
   switch(s->map.field[ppos.y][ppos.x]) {
+  case GOAL:
+    s->player[player_id].is_goal = true;
+    break;
   default:
     // nマス進む
     if(s->map.field[ppos.y][ppos.x] >= 11 && s->map.field[ppos.y][ppos.x] < 20) {
       *scene = S_MOVE;
       ss->move_num = s->map.field[ppos.y][ppos.x]%10;
-      clearPosition(&ss->plist);
+    }
+    // nマス戻る
+    else if(s->map.field[ppos.y][ppos.x] >= 21 && s->map.field[ppos.y][ppos.x] < 30) {
     }
     // それ以外
     else {
-      *scene = S_FIELD;
-      ss->current_player = (ss->current_player+1) % s->player_num;
-      clearPosition(&ss->plist);
     }
     break;
   }
+
+  if(nextPlayer(s, ss)) {
+    *scene = S_FIELD;
+  } else {
+    *scene = S_RESULT;
+  }
+  clearPosition(&ss->plist);
 }
 
 void fieldAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene *scene) {

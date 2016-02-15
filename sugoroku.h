@@ -25,6 +25,7 @@ void initSugorokuStatus(SugorokuStatus *ss);
 int importItemFile(Sugoroku* sugoroku, char *dir);
 int canMove(Map *m, Position p);
 int movePlayer(Sugoroku*, int player_id, enum Direction d, PositionList*, SugorokuStatus *ss);
+int nextPlayer(Sugoroku *s, SugorokuStatus *ss);
 int setPlayerStart(Sugoroku* s);
 
 #endif

@@ -7,6 +7,7 @@ typedef struct Player {
   int player_num;
   char name[20];
   int money;
+  int is_goal;
   Bag bag;    //change name
   Position pos;
 } Player;
