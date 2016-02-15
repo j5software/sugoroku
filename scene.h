@@ -3,6 +3,7 @@
 
 typedef enum Scene {
   S_FIELD,
+  S_ITEMMENU,
   S_USEITEM,
   S_THROWDICE,
   S_PANELEVENT,

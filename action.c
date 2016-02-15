@@ -3,33 +3,52 @@
 #include <stdlib.h>
 #include <time.h>
 
+// nマス戻る
+void backPlayer(Sugoroku *s, SugorokuStatus* ss, int player_id, int backnum) {
+  int i;
+  Position tmp;
+  tmp.x = tmp.y = -1;
+  for(i = 0; i < backnum-1; i++) {
+    s->player[player_id].pos = popPosition(&s->player[player_id].footmark);
+    if(isPositionEqual(s->player[player_id].pos, tmp)) {
+      return;
+    }
+  }
+}
+
 void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene) {
   Position ppos = s->player[player_id].pos;
   switch(s->map.field[ppos.y][ppos.x]) {
   case GOAL:
     s->player[player_id].is_goal = true;
+    ss->goal_player_num++;
+    if(ss->goal_player_num >= s->player_num) {
+      *scene = S_RESULT;
+    }
+    clearPosition(&ss->plist);
     break;
   default:
     // nマス進む
     if(s->map.field[ppos.y][ppos.x] >= 11 && s->map.field[ppos.y][ppos.x] < 20) {
       *scene = S_MOVE;
       ss->move_num = s->map.field[ppos.y][ppos.x]%10;
+      clearPosition(&ss->plist);
     }
     // nマス戻る
     else if(s->map.field[ppos.y][ppos.x] >= 21 && s->map.field[ppos.y][ppos.x] < 30) {
+      backPlayer(s, ss, player_id, s->map.field[ppos.y][ppos.x]%10);
+      *scene = S_PANELEVENT;
+      clearPosition(&ss->plist);
     }
     // それ以外
     else {
+      if(setNextPlayer(s, ss)) {
+        *scene = S_FIELD;
+      }
+      clearPosition(&ss->plist);
     }
     break;
   }
-
-  if(nextPlayer(s, ss)) {
-    *scene = S_FIELD;
-  } else {
-    *scene = S_RESULT;
-  }
-  clearPosition(&ss->plist);
 }
 
 void fieldAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene *scene) {
@@ -93,4 +112,8 @@ void moveAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id,
     break;
   }
   if(ss->move_num <= 0) *scene = S_PANELEVENT;
+  Position pos = s->player[player_id].pos;
+  if(s->map.field[pos.y][pos.x] == GOAL) {
+    clearPosition(&ss->plist);
+  }
 }

@@ -2,8 +2,6 @@
 #define __DISP_H__
 #define MASU_W 5 // マスの表示上の幅
 #define MASU_H 4 // マスの表示上の高さ
-#include "dispmap.h"
-#include "dispmenu.h"
 #include "scene.h"
 #include "sugoroku.h"
 
@@ -19,6 +17,7 @@ int dispmap(Map* m, Player* p, int player_num, int x, int y, Position pos, int w
 int dispmenu(Menu* m, int x, int y);
 void dispMove(SugorokuStatus *ss, DispOption *doption);
 void dispThrowDice(SugorokuStatus *ss, DispOption *doption);
+void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption);
 int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene, DispOption *doption);
 
 #endif

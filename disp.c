@@ -118,7 +118,7 @@ int dispmenu(Menu* m, int x, int y) {
   }
   x1=m->select+1;
   //attrset(A_DIM);
-  attron(A_BLINK); 
+  attron(A_BLINK);
   mvprintw(y+x1,x+3,">");
   attrset(A_NORMAL);
 
@@ -131,6 +131,13 @@ void dispThrowDice(SugorokuStatus *ss, DispOption *doption) {
 
 void dispMove(SugorokuStatus *ss, DispOption *doption) {
   mvprintw(doption->mes_y, doption->mes_x, "あと%d マス", ss->move_num);
+}
+
+void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption) {
+  int i;
+  for(i = 0; i < s->player_num; i++) {
+    mvprintw(doption->mes_y + i, doption->mes_x, "[%d位] %d番 %s殿", s->player[i].ranking, i, s->player[i].name);
+  }
 }
 
 int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene, DispOption *doption) {
@@ -155,6 +162,7 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
   case S_FIELD:
     dispField(sugoroku, ss, mymenu, doption);
     break;
+  case S_ITEMMENU:
   case S_USEITEM:
     break;
   case S_THROWDICE:
@@ -164,6 +172,9 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
     dispMove(ss, doption);
     break;
   case S_PANELEVENT:
+    break;
+  case S_RESULT:
+    dispResult(sugoroku, ss, scene, doption);
     break;
   }
   refresh();

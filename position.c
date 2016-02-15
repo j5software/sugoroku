@@ -26,16 +26,22 @@ void pushPosition(PositionList* l, Position p) {
   l->end->pos = p;
 }
 
-void popPosition(PositionList* l) {
-  if(l->end == NULL) return;
+Position popPosition(PositionList* l) {
+  if(l->end == NULL) {
+    Position tmp;
+    tmp.x = tmp.y = -1;
+    return tmp;
+  }
   if(l->end == l->begin) {
+    Position tmp = l->end->pos;
     free(l->end);
     l->end = l->begin = NULL;
-    return;
+    return tmp;
   }
   l->end = l->end->prev;
   free(l->end->next);
   l->end->next = NULL;
+  return l->end->pos;
 }
 
 void clearPosition(PositionList* l) {

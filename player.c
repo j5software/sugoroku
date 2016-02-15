@@ -6,7 +6,8 @@ void initPlayer(Player *p, int player_num) {
   p->money = 0;
   p->pos.x = p->pos.y = 0;
   p->is_goal = 0;
+  p->ranking = 1;
 
   initBag(&p->bag);
-  // バッグ初期化
+  initPositionList(&p->footmark);
 }

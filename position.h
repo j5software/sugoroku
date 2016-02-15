@@ -24,7 +24,7 @@ typedef struct PositionList {
 void initPosition(Position* p);
 void initPositionList(PositionList* l);
 void pushPosition(PositionList* l, Position p);
-void popPosition(PositionList* l);
+Position popPosition(PositionList* l);
 void clearPosition(PositionList* l);
 int isExistPosition(PositionList* l, Position p);
 int isPositionEqual(Position p1, Position p2);

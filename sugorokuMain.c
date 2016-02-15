@@ -17,6 +17,8 @@ int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, MyMe
   case S_FIELD:
     fieldAction(current_key, sugoroku, sstatus, sstatus->current_player, menus, scene);
     break;
+  case S_ITEMMENU:
+    break;
   case S_USEITEM:
     break;
   case S_THROWDICE:
@@ -43,7 +45,7 @@ void sugorokuMain(Sugoroku *sugoroku) {
   DispOption doption;
   MyMenu menus;
 
-  if(!initSugoroku(sugoroku, 4)) return;
+  if(!initSugoroku(sugoroku, 1)) return;
   initCurses();
   initMyMenu(&menus, sugoroku->player_num);
   initSugorokuStatus(&sstatus);

@@ -20,6 +20,7 @@ void initSugorokuStatus(SugorokuStatus *ss) {
   ss->current_player = 0;
   ss->move_num = 0;
   ss->dice_rate = 1.0;
+  ss->goal_player_num = 0;
   initPositionList(&ss->plist);
 }
 
@@ -94,6 +95,7 @@ int movePlayer(Sugoroku *s, int player_id, enum Direction d, PositionList *plist
       ss->move_num++;
       s->player[player_id].pos = mpos;
       popPosition(plist);
+      popPosition(&s->player[player_id].footmark);
     } else {
       return 0;
     }
@@ -101,6 +103,7 @@ int movePlayer(Sugoroku *s, int player_id, enum Direction d, PositionList *plist
     ss->move_num--;
     s->player[player_id].pos = mpos;
     pushPosition(plist, pos);
+    pushPosition(&s->player[player_id].footmark, pos);
   }
   return 1;
 }
@@ -126,7 +129,7 @@ int setPlayerStart(Sugoroku* s) {
   return 0;
 }
 
-int nextPlayer(Sugoroku *s, SugorokuStatus *ss) {
+int setNextPlayer(Sugoroku *s, SugorokuStatus *ss) {
   if(s->player_num <= 1) {
     if(s->player[0].is_goal) {
       return 0;

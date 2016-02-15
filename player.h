@@ -8,8 +8,10 @@ typedef struct Player {
   char name[20];
   int money;
   int is_goal;
+  int ranking;
   Bag bag;    //change name
   Position pos;
+  PositionList footmark;
 } Player;
 
 void initPlayer(Player *p, int player_num);
