@@ -1,6 +1,7 @@
 #include "menu.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 void initMenu(Menu *m, int menu_num) {
   int i;
@@ -24,18 +25,17 @@ void initMainMenu(Menu *main_menu) {
   setMenuStr(main_menu, MM_QUIT, "Quit game");
 }
 
-
-void initMyMenu(MyMenu *m, Player players[], int player_num) {
+void initMyMenu(MyMenu *m, Sugoroku *s) {
   int i;
   initMainMenu(&m->main_menu);
-  initMenu(&m->target_menu, player_num + 1);
+  initMenu(&m->target_menu, s->player_num + 1);
   setMenuStr(&m->target_menu, 0, "Back");
-  m->item_menu = (Menu *)malloc(sizeof(Menu)*player_num);
-  for(i = 0; i < player_num; i++) {
+  m->item_menu = (Menu *)malloc(sizeof(Menu)*s->player_num);
+  for(i = 0; i < s->player_num; i++) {
     initMenu(&m->item_menu[i], 2);
     setMenuStr(&m->item_menu[i], 0, "Back");
     setMenuStr(&m->item_menu[i], 1, "Item");
-    setMenuStr(&m->target_menu, i+1, players[i].name);
+    setMenuStr(&m->target_menu, i+1, s->player[i].name);
   }
 }
 
@@ -44,19 +44,42 @@ void setMenuStr(Menu* m, int set_num, char* str) {
   strcpy(m->str[set_num], str);
 }
 
+void setItemMenu(MyMenu *m, Player *p, Item item[]) {
+  int i;
+  deleteMenu(&m->item_menu[p->player_id]);
+  for(i = 0; i < p->bag.size && p->bag.items[i].num > 0; i++);
+  initMenu(&m->item_menu[p->player_id], i+1);
+  setMenuStr(&m->item_menu[p->player_id], 0, "Back");
+
+  for(i = 0; i < m->item_menu[p->player_id].menu_num; i++) {
+    char str[20 + 3] = {};
+    sprintf(str, "%s x%d", item[p->bag.items[i].item_id].name, p->bag.items[i].num);
+    setMenuStr(&m->item_menu[p->player_id], i+1, str);
+  }
+}
+
+void setItemMenuAll(MyMenu *m, Sugoroku *s) {
+  int i;
+  for(i = 0; i < s->player_num; i++) {
+    setItemMenu(m, &s->player[i], s->item);
+  }
+}
+
 void deleteMenu(Menu* m) {
   int i;
+  if(!m) return;
+  if(!m->str) return;
   for(i = 0; i < m->menu_num; i++) {
     free(m->str[i]);
   }
   free(m->str);
 }
 
-void deleteMyMenu(MyMenu *m, int player_num) {
+void deleteMyMenu(MyMenu *m, Sugoroku *s) {
   int i;
 
   deleteMenu(&m->main_menu);
-  for(i = 0; i < player_num; i++) {
+  for(i = 0; i < s->player_num; i++) {
     deleteMenu(&m->item_menu[i]);
   }
   free(m->item_menu);

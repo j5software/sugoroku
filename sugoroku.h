@@ -1,7 +1,6 @@
 #ifndef __SUGOROKU_H__
 #define __SUGOROKU_H__
 #include "item.h"
-#include "menu.h"
 #include "map.h"
 #include "player.h"
 #include "useItem.h"
@@ -25,9 +24,10 @@ typedef struct SugorokuStatus {
   PositionList plist;
 } SugorokuStatus;
 
-int initSugoroku(Sugoroku* s, int player_num);
+int initSugoroku(Sugoroku *s, int player_num);
 void initSugorokuStatus(SugorokuStatus *ss);
-int importItemFile(Sugoroku* sugoroku, char *dir);
+int finalizeSugoroku(Sugoroku *s);
+int importItemFile(Sugoroku *sugoroku, char *dir);
 int canMove(Map *m, Position p);
 int movePlayer(Sugoroku *, int player_id, enum Direction d, PositionList*, SugorokuStatus *ss);
 int setNextPlayer(Sugoroku *s, SugorokuStatus *ss);

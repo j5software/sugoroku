@@ -4,7 +4,7 @@
 #include "position.h"
 
 typedef struct Player {
-  int player_num;
+  int player_id;
   char name[20];
   int money;
   int is_goal;
@@ -14,6 +14,7 @@ typedef struct Player {
   PositionList footmark;
 } Player;
 
-void initPlayer(Player *p, int player_num);
+void initPlayer(Player *p, int player_id);
+void finalizePlayer(Player *p);
 
 #endif

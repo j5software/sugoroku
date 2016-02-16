@@ -1,7 +1,6 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include "player.h"
 #include "position.h"
 
 struct Sugoroku;

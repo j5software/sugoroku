@@ -22,7 +22,7 @@ void itemMenuAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player
       *scene = S_FIELD;
     } else {
       *scene = S_SELECT_TARGET;
-      ss->select_itemid = s->player[player_id].bag.items[menus->item_menu[player_id].select - 1][1];
+      ss->select_itemid = s->player[player_id].bag.items[menus->item_menu[player_id].select - 1].item_id;
       ss->select_bag = menus->item_menu[player_id].select - 1;
     }
   } else if(current_key == 'x') {
@@ -106,6 +106,7 @@ void selectTargetAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int pl
       *scene = S_USEITEM;
       ss->item_target= menus->target_menu.select - 1;
       useItem(s, ss, player_id, ss->item_target, ss->select_itemid);
+      setItemMenuAll(menus, s);
     }
   } else if(current_key == 'x') {
     *scene = S_ITEMMENU;
@@ -146,7 +147,7 @@ void resultAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_i
 
 void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id) {
   s->item[item_id].use(s, ss, player_id, target);
-  s->player[player_id].bag.item[select_bag][1]--;
+  popBagItem(&s->player[player_id].bag, ss->select_bag);
 }
 
 void useItemAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene) {

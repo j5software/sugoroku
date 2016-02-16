@@ -71,20 +71,22 @@ void sugorokuMain(Sugoroku *sugoroku) {
 
   if(!initSugoroku(sugoroku, 1)) return;
   strcpy(sugoroku->player[0].name, "zero");
-  sugoroku->player[0].bag.items[0][0] = 2;
-  sugoroku->player[0].bag.items[0][1] = 1;
+  sugoroku->player[0].bag.items[0].item_id = 6;
+  sugoroku->player[0].bag.items[0].num = 1;
   initCurses();
-  initMyMenu(&menus, sugoroku->player, sugoroku->player_num);
+  initMyMenu(&menus, sugoroku);
   initSugorokuStatus(&sstatus);
   initMyDispOption(&doption);
   setUseItem(sugoroku);
-
+  setItemMenuAll(&menus, sugoroku);
 
   while(!end_flag) {
     current_key = getch();
     if(current_key == 'q') break;
     end_flag = !sceneProcess(sugoroku, &scene, &sstatus, &menus, &doption, current_key);
   }
-  deleteMyMenu(&menus, sugoroku->player_num);
+
+  deleteMyMenu(&menus, sugoroku);
+  finalizeSugoroku(sugoroku);
   endwin();
 }

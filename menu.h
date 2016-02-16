@@ -1,6 +1,8 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 #include "player.h"
+#include "sugoroku.h"
+#include "item.h"
 
 typedef struct Menu {
   char** str; // 2次元配列 表示する文字列
@@ -24,9 +26,11 @@ enum MainMenu {
 
 void initMenu(Menu *m, int menu_num);
 void initMainMenu(Menu *main_menu);
-void initMyMenu(MyMenu *m, Player players[], int player_num);
-void deleteMyMenu(MyMenu *m, int player_num);
+void initMyMenu(MyMenu *m, Sugoroku *s);
+void deleteMyMenu(MyMenu *m, Sugoroku *s);
 void setMenuStr(Menu *m, int set_num, char* str);
+void setItemMenu(MyMenu *m, Player *p, Item item[]);
+void setItemMenuAll(MyMenu *m, Sugoroku *s);
 void deleteMenu(Menu *m);
 void moveMenuUp(Menu *m);
 void moveMenuDown(Menu *m);

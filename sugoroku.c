@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int initSugoroku(Sugoroku* s, int player_num) {
+int initSugoroku(Sugoroku *s, int player_num) {
   int i;
   s->player_num = player_num;
   s->player = (Player *)malloc(sizeof(Player)*player_num);
@@ -27,7 +27,20 @@ void initSugorokuStatus(SugorokuStatus *ss) {
   initPositionList(&ss->plist);
 }
 
-int importItemFile(Sugoroku* sugoroku, char* dir)
+int finalizeSugoroku(Sugoroku *s) {
+  int i;
+  if(s->player) {
+    for(i = 0; i < s->player_num; i++) {
+      finalizePlayer(&s->player[i]);
+    }
+    free(s->player);
+  }
+  if(s->item)
+    free(s->item);
+  return 1;
+}
+
+int importItemFile(Sugoroku *sugoroku, char* dir)
 {
   FILE *fp;
   int i;

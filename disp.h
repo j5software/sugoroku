@@ -4,6 +4,7 @@
 #define MASU_H 4 // マスの表示上の高さ
 #include "scene.h"
 #include "sugoroku.h"
+#include "menu.h"
 
 typedef struct DispOption {
   int std_x, std_y; // 表示の基準の位置
