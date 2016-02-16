@@ -4,6 +4,7 @@
 #include "scene.h"
 #include "disp.h"
 
+int setUseItem(Sugoroku *s);
 void initMyDispOption(DispOption *doption);
 void sugorokuMain(Sugoroku* sugoroku);
 

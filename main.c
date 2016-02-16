@@ -7,7 +7,5 @@ int main(void) {
 
   sugorokuMain(&sugoroku);
 
-  endwin();
-
   return 0;
 }

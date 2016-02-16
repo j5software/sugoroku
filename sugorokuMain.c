@@ -10,6 +10,21 @@ void initMyDispOption(DispOption *doption) {
   doption->std_y = 3;
   doption->mes_x = doption->std_x + 3;
   doption->mes_y = doption->std_y + doption->map_h*MASU_H + 3;
+  doption->menu_x = doption->std_x + doption->map_w*MASU_W + 3;
+  doption->menu_y = doption->std_y + 2;
+}
+
+int setUseItem(Sugoroku *s) {
+  s->item[0].use = useItem0;
+  s->item[1].use = useItem1;
+  s->item[2].use = useItem2;
+  s->item[3].use = useItem3;
+  s->item[4].use = useItem4;
+  s->item[5].use = useItem5;
+  s->item[6].use = useItem6;
+  s->item[7].use = useItem7;
+  s->item[8].use = useItem8;
+  return 1;
 }
 
 int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, MyMenu *menus, DispOption *doption, int current_key) {
@@ -18,8 +33,13 @@ int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, MyMe
     fieldAction(current_key, sugoroku, sstatus, sstatus->current_player, menus, scene);
     break;
   case S_ITEMMENU:
+    itemMenuAction(current_key, sugoroku, sstatus, sstatus->current_player, menus, scene);
+    break;
+  case S_SELECT_TARGET:
+    selectTargetAction(current_key, sugoroku, sstatus, sstatus->current_player, menus, scene);
     break;
   case S_USEITEM:
+    useItemAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
     break;
   case S_THROWDICE:
     throwDiceAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
@@ -31,6 +51,10 @@ int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, MyMe
     panelEventAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
     break;
   case S_RESULT:
+    resultAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
+    break;
+  case S_QUIT:
+    return 0;
     break;
   }
   display(sugoroku, sstatus, menus, *scene, doption);
@@ -46,17 +70,21 @@ void sugorokuMain(Sugoroku *sugoroku) {
   MyMenu menus;
 
   if(!initSugoroku(sugoroku, 1)) return;
+  strcpy(sugoroku->player[0].name, "zero");
+  sugoroku->player[0].bag.items[0][0] = 2;
+  sugoroku->player[0].bag.items[0][1] = 1;
   initCurses();
-  initMyMenu(&menus, sugoroku->player_num);
+  initMyMenu(&menus, sugoroku->player, sugoroku->player_num);
   initSugorokuStatus(&sstatus);
   initMyDispOption(&doption);
+  setUseItem(sugoroku);
+
 
   while(!end_flag) {
     current_key = getch();
     if(current_key == 'q') break;
-    sceneProcess(sugoroku, &scene, &sstatus, &menus, &doption, current_key);
-    //selectAction(current_key, &main_menu);
-    //if(current_key == 'a') mvprintw(0, i++, "%d",main_menu.select);
+    end_flag = !sceneProcess(sugoroku, &scene, &sstatus, &menus, &doption, current_key);
   }
   deleteMyMenu(&menus, sugoroku->player_num);
+  endwin();
 }

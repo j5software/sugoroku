@@ -4,11 +4,13 @@
 typedef enum Scene {
   S_FIELD,
   S_ITEMMENU,
+  S_SELECT_TARGET,
   S_USEITEM,
   S_THROWDICE,
   S_PANELEVENT,
   S_MOVE,
-  S_RESULT
+  S_RESULT,
+  S_QUIT
 } Scene;
 
 #endif

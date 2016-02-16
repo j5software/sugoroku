@@ -25,9 +25,18 @@ void initMainMenu(Menu *main_menu) {
 }
 
 
-void initMyMenu(MyMenu *m, int player_num) {
+void initMyMenu(MyMenu *m, Player players[], int player_num) {
+  int i;
   initMainMenu(&m->main_menu);
+  initMenu(&m->target_menu, player_num + 1);
+  setMenuStr(&m->target_menu, 0, "Back");
   m->item_menu = (Menu *)malloc(sizeof(Menu)*player_num);
+  for(i = 0; i < player_num; i++) {
+    initMenu(&m->item_menu[i], 2);
+    setMenuStr(&m->item_menu[i], 0, "Back");
+    setMenuStr(&m->item_menu[i], 1, "Item");
+    setMenuStr(&m->target_menu, i+1, players[i].name);
+  }
 }
 
 void setMenuStr(Menu* m, int set_num, char* str) {
@@ -58,11 +67,11 @@ void moveMenuUp(Menu* m) {
   if(m->select < 0) {
     m->select += m->menu_num;
   }
-  m->select = m->select%4;
+  m->select = m->select%m->menu_num;
 }
 
 void moveMenuDown(Menu* m) {
-  m->select = (m->select+1)%4;
+  m->select = (m->select+1)%m->menu_num;
 }
 
 

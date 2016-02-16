@@ -21,6 +21,9 @@ void initSugorokuStatus(SugorokuStatus *ss) {
   ss->move_num = 0;
   ss->dice_rate = 1.0;
   ss->goal_player_num = 0;
+  ss->select_itemid = -1;
+  ss->item_target = 0;
+  ss->select_bag = 0;
   initPositionList(&ss->plist);
 }
 
@@ -42,6 +45,12 @@ int importItemFile(Sugoroku* sugoroku, char* dir)
       sugoroku->item_num++;
     }
   } while (c != EOF);
+
+  fclose(fp);
+  if ((fp = fopen(dir, "r")) == NULL) {
+    printf("can't open item file.\n");
+    return 0;
+  }
 
   sugoroku->item = (Item *)malloc((sizeof(Item)* sugoroku->item_num));
 
@@ -146,3 +155,4 @@ int setNextPlayer(Sugoroku *s, SugorokuStatus *ss) {
   }
   return 0;
 }
+

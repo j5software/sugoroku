@@ -16,6 +16,22 @@ void backPlayer(Sugoroku *s, SugorokuStatus* ss, int player_id, int backnum) {
   }
 }
 
+void itemMenuAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene* scene) {
+  if(current_key == '\n' || current_key == 'z') {
+    if(menus->item_menu[player_id].select == 0) {
+      *scene = S_FIELD;
+    } else {
+      *scene = S_SELECT_TARGET;
+      ss->select_itemid = s->player[player_id].bag.items[menus->item_menu[player_id].select - 1][1];
+      ss->select_bag = menus->item_menu[player_id].select - 1;
+    }
+  } else if(current_key == 'x') {
+    *scene = S_FIELD;
+  } else {
+    selectAction(current_key, &menus->item_menu[player_id]);
+  }
+}
+
 void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene) {
   Position ppos = s->player[player_id].pos;
   switch(s->map.field[ppos.y][ppos.x]) {
@@ -52,16 +68,18 @@ void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int play
 }
 
 void fieldAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene *scene) {
-  if(current_key == '\n') {
+  if(current_key == '\n' || current_key == 'z') {
     switch(menus->main_menu.select) {
     case MM_THROWDICE:
       *scene = S_THROWDICE;
       break;
     case MM_ITEM:
+      *scene = S_ITEMMENU;
       break;
     case MM_SAVE:
       break;
     case MM_QUIT:
+      *scene = S_QUIT;
       break;
     }
   } else {
@@ -80,6 +98,22 @@ void selectAction(int current_key, Menu *m) {
   }
 }
 
+void selectTargetAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene* scene) {
+  if(current_key == '\n' || current_key == 'z') {
+    if(menus->target_menu.select == 0) {
+      *scene = S_ITEMMENU;
+    } else {
+      *scene = S_USEITEM;
+      ss->item_target= menus->target_menu.select - 1;
+      useItem(s, ss, player_id, ss->item_target, ss->select_itemid);
+    }
+  } else if(current_key == 'x') {
+    *scene = S_ITEMMENU;
+  } else {
+    selectAction(current_key, &menus->target_menu);
+  }
+}
+
 int throwDice(double rate) {
   int num;
 
@@ -90,9 +124,34 @@ int throwDice(double rate) {
 }
 
 void throwDiceAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene) {
-  if(current_key == '\n'){
+  if(current_key == '\n' || current_key == 'z'){
     ss->move_num = throwDice(ss->dice_rate);
     *scene = S_MOVE;
+  }
+}
+
+void resultAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene) {
+  // 未完成
+  //
+  //
+  //
+  if(current_key == '\n' || current_key == 'z') {
+    *scene = S_QUIT;
+    int i;
+    for(i = 0; i < s->player_num; i++) {
+      clearPosition(&s->player[i].footmark);
+    }
+  }
+}
+
+void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id) {
+  s->item[item_id].use(s, ss, player_id, target);
+  s->player[player_id].bag.item[select_bag][1]--;
+}
+
+void useItemAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene) {
+  if(current_key == '\n' || current_key == 'z') {
+    *scene = S_FIELD;
   }
 }
 
@@ -111,7 +170,10 @@ void moveAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id,
     movePlayer(s, player_id, LEFT, &ss->plist, ss);
     break;
   }
-  if(ss->move_num <= 0) *scene = S_PANELEVENT;
+  if(ss->move_num <= 0) {
+    *scene = S_PANELEVENT;
+    ss->dice_rate = 1.0;
+  }
   Position pos = s->player[player_id].pos;
   if(s->map.field[pos.y][pos.x] == GOAL) {
     clearPosition(&ss->plist);

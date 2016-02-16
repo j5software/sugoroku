@@ -1,26 +1,34 @@
 #include "disp.h"
 #include <ncurses.h>
 #include <stdlib.h>
+#include <string.h>
 
 void initDispOption(DispOption *doption) {
   doption->std_x = doption->std_y = 0;
   doption->map_w = doption->map_h = 0;
   doption->mes_x = doption->mes_y = 0;
+  doption->menu_x = doption->menu_y = 0;
 }
 
 void dispField(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
-  dispmenu(&mymenu->main_menu, doption->std_x+doption->map_w*MASU_W+3, doption->std_y+2);
+  dispmenu(&mymenu->main_menu, doption->menu_x, doption->menu_y);
   mvprintw(doption->mes_y, doption->mes_x, "[%d] %sの番", ss->current_player, s->player[ss->current_player].name);
 }
 
-int dispmap(Map* m, Player* p, int player_num, int x, int y, Position pos, int width, int height)
+void dispItemMenu(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
+  int len = strlen(mymenu->main_menu.str[MM_ITEM]);
+  dispmenu(&mymenu->item_menu[ss->current_player], doption->menu_x+len+4+1, doption->menu_y+MM_ITEM);
+  mvprintw(doption->mes_y, doption->mes_x, "[%d] %sの番", ss->current_player, s->player[ss->current_player].name);
+}
+
+int dispmap(Map* m, Player p[], int player_num, int x, int y, Position pos, int width, int height)
 {
   int i,j;
   int k,l;
-  char temp[4][5] ={{"+---+"},
-                    {"|   |"},
-                    {"|   |"},
-                    {"+---+"}}; //表示マステンプレート
+  char temp[MASU_H][MASU_W] ={{"+---+"},
+                              {"|   |"},
+                              {"|   |"},
+                              {"+---+"}}; //表示マステンプレート
 
   start_color();
   use_default_colors();
@@ -140,6 +148,19 @@ void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doptio
   }
 }
 
+void dispSelectTarget(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
+  int len = strlen(mymenu->main_menu.str[MM_ITEM]);
+  int lenitem = strlen(mymenu->item_menu[ss->current_player].str[mymenu->item_menu[ss->current_player].select]);
+  int x = doption->menu_x+len+lenitem+4*2 + 1*2;
+  int y = doption->menu_y+MM_ITEM+mymenu->item_menu[ss->current_player].select;
+  dispmenu(&mymenu->target_menu, x, y);
+  mvprintw(doption->mes_y, doption->mes_x, "[%d] %sの番", ss->current_player, s->player[ss->current_player].name);
+}
+
+void dispUseItem(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption) {
+  mvprintw(doption->mes_y, doption->mes_x, "[%d]%sは[%d]%sに「%s」を使った！", ss->current_player, s->player[ss->current_player].name, ss->item_target, s->player[ss->item_target].name, s->item[ss->select_itemid].name);
+}
+
 int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene, DispOption *doption) {
   erase();
   Position dpos;
@@ -163,7 +184,16 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
     dispField(sugoroku, ss, mymenu, doption);
     break;
   case S_ITEMMENU:
+    dispField(sugoroku, ss, mymenu, doption);
+    dispItemMenu(sugoroku, ss, mymenu, doption);
+    break;
+  case S_SELECT_TARGET:
+    dispField(sugoroku, ss, mymenu, doption);
+    dispItemMenu(sugoroku, ss, mymenu, doption);
+    dispSelectTarget(sugoroku, ss, mymenu, doption);
+    break;
   case S_USEITEM:
+    dispUseItem(sugoroku, ss, scene, doption);
     break;
   case S_THROWDICE:
     dispThrowDice(ss, doption);
@@ -175,6 +205,8 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
     break;
   case S_RESULT:
     dispResult(sugoroku, ss, scene, doption);
+    break;
+  default:
     break;
   }
   refresh();
