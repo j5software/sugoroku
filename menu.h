@@ -14,6 +14,7 @@ typedef struct Menu {
 typedef struct MyMenu {
   Menu main_menu;
   Menu target_menu; // アイテムを使うターゲット
+  Menu shop_menu;
   Menu *item_menu; // 配列[プレイヤー人数]
 } MyMenu;
 
@@ -30,6 +31,7 @@ void initMyMenu(MyMenu *m, Sugoroku *s);
 void deleteMyMenu(MyMenu *m, Sugoroku *s);
 void setMenuStr(Menu *m, int set_num, char* str);
 void setItemMenu(MyMenu *m, Player *p, Item item[]);
+void setShopMenu(MyMenu *m, Sugoroku *s);
 void setItemMenuAll(MyMenu *m, Sugoroku *s);
 void deleteMenu(Menu *m);
 void moveMenuUp(Menu *m);

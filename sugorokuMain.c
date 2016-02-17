@@ -1,7 +1,7 @@
 #include "sugorokuMain.h"
-#include <ncurses.h>
 #include "action.h"
 #include "init.h"
+#include "scene.h"
 
 void initMyDispOption(DispOption *doption) {
   doption->map_w = 15; // 表示するマップの範囲は15*10
@@ -50,6 +50,9 @@ int sceneProcess(Sugoroku *sugoroku, Scene *scene, SugorokuStatus *sstatus, MyMe
   case S_PANELEVENT:
     panelEventAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
     break;
+  case S_SHOP:
+    shopAction(current_key, sugoroku, sstatus, sstatus->current_player, menus, scene);
+    break;
   case S_RESULT:
     resultAction(current_key, sugoroku, sstatus, sstatus->current_player, scene);
     break;
@@ -69,13 +72,17 @@ void sugorokuMain(Sugoroku *sugoroku) {
   DispOption doption;
   MyMenu menus;
 
-  if(!initSugoroku(sugoroku, 1)) return;
+  if(!initSugoroku(sugoroku, 4)) return;
   strcpy(sugoroku->player[0].name, "zero");
-  sugoroku->player[0].bag.items[0].item_id = 6;
-  sugoroku->player[0].bag.items[0].num = 1;
+  strcpy(sugoroku->player[1].name, "one");
+  strcpy(sugoroku->player[2].name, "two");
+  strcpy(sugoroku->player[3].name, "three");
+  sugoroku->player[0].money = 10000;
+  addBagItem(&sugoroku->player[0].bag, 6, 1);
+  addBagItem(&sugoroku->player[0].bag, 6, 1);
   initCurses();
   initMyMenu(&menus, sugoroku);
-  initSugorokuStatus(&sstatus);
+  initSugorokuStatus(&sstatus, sugoroku);
   initMyDispOption(&doption);
   setUseItem(sugoroku);
   setItemMenuAll(&menus, sugoroku);

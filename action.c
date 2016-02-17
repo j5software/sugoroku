@@ -22,7 +22,7 @@ void itemMenuAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player
       *scene = S_FIELD;
     } else {
       *scene = S_SELECT_TARGET;
-      ss->select_itemid = s->player[player_id].bag.items[menus->item_menu[player_id].select - 1].item_id;
+      ss->select_itemid = s->player[player_id].bag.item[menus->item_menu[player_id].select - 1].item_id;
       ss->select_bag = menus->item_menu[player_id].select - 1;
     }
   } else if(current_key == 'x') {
@@ -40,6 +40,20 @@ void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int play
     ss->goal_player_num++;
     if(ss->goal_player_num >= s->player_num) {
       *scene = S_RESULT;
+    } else {
+      *scene = S_FIELD;
+    }
+    s->player[player_id].ranking = ss->goal_player_num;
+    setNextPlayer(s, ss);
+    clearPosition(&ss->plist);
+    break;
+  case SHOP:
+    *scene = S_SHOP;
+    break;
+  case COIN:
+    s->player[player_id].money += BONUS_COIN;
+    if(setNextPlayer(s, ss)) {
+      *scene = S_FIELD;
     }
     clearPosition(&ss->plist);
     break;
@@ -58,13 +72,13 @@ void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int play
     }
     // それ以外
     else {
-      if(setNextPlayer(s, ss)) {
-        *scene = S_FIELD;
-      }
+      setNextPlayer(s, ss);
+      *scene = S_FIELD;
       clearPosition(&ss->plist);
     }
     break;
   }
+  s->player[player_id].money += ADD_MONEY;
 }
 
 void fieldAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene *scene) {
@@ -104,7 +118,7 @@ void selectTargetAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int pl
       *scene = S_ITEMMENU;
     } else {
       *scene = S_USEITEM;
-      ss->item_target= menus->target_menu.select - 1;
+      ss->item_target = menus->target_menu.select - 1;
       useItem(s, ss, player_id, ss->item_target, ss->select_itemid);
       setItemMenuAll(menus, s);
     }
@@ -112,6 +126,28 @@ void selectTargetAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int pl
     *scene = S_ITEMMENU;
   } else {
     selectAction(current_key, &menus->target_menu);
+  }
+}
+
+void shopAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene* scene) {
+  if(current_key == '\n' || current_key == 'z') {
+    if(menus->shop_menu.select == 0) {
+      *scene = S_FIELD;
+    } else {
+      if(s->player[player_id].money >= s->shop.item[menus->shop_menu.select - 1].price) {
+        int buy_itemid = popShopItem(&s->shop, menus->shop_menu.select - 1);
+        if(buy_itemid >= 0) {
+          addBagItem(&s->player[player_id].bag, buy_itemid, 1);
+          s->player[player_id].money -= s->shop.item[menus->shop_menu.select - 1].price;
+          setItemMenuAll(menus, s);
+          setShopMenu(menus, s);
+        }
+      }
+    }
+  } else if(current_key == 'x') {
+    *scene = S_FIELD;
+  } else {
+    selectAction(current_key, &menus->shop_menu);
   }
 }
 
@@ -126,7 +162,7 @@ int throwDice(double rate) {
 
 void throwDiceAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene) {
   if(current_key == '\n' || current_key == 'z'){
-    ss->move_num = throwDice(ss->dice_rate);
+    ss->move_num = throwDice(ss->dice_rate[player_id]);
     *scene = S_MOVE;
   }
 }
@@ -173,7 +209,8 @@ void moveAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id,
   }
   if(ss->move_num <= 0) {
     *scene = S_PANELEVENT;
-    ss->dice_rate = 1.0;
+    ss->dice_rate[player_id] = 1.0;
+    clearPosition(&ss->plist);
   }
   Position pos = s->player[player_id].pos;
   if(s->map.field[pos.y][pos.x] == GOAL) {

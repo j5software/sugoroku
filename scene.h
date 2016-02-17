@@ -8,6 +8,7 @@ typedef enum Scene {
   S_USEITEM,
   S_THROWDICE,
   S_PANELEVENT,
+  S_SHOP,
   S_MOVE,
   S_RESULT,
   S_QUIT

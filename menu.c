@@ -29,14 +29,21 @@ void initMyMenu(MyMenu *m, Sugoroku *s) {
   int i;
   initMainMenu(&m->main_menu);
   initMenu(&m->target_menu, s->player_num + 1);
+  initMenu(&m->shop_menu, s->shop.size + 1);
   setMenuStr(&m->target_menu, 0, "Back");
+  setMenuStr(&m->shop_menu, 0, "Back");
   m->item_menu = (Menu *)malloc(sizeof(Menu)*s->player_num);
   for(i = 0; i < s->player_num; i++) {
     initMenu(&m->item_menu[i], 2);
     setMenuStr(&m->item_menu[i], 0, "Back");
-    setMenuStr(&m->item_menu[i], 1, "Item");
     setMenuStr(&m->target_menu, i+1, s->player[i].name);
   }
+
+  /*
+  for(i = 0; i < s->shop.size; i++) {
+    setMenuStr(&m->shop_menu, i+1, s->item[s->shop.item[i].item_id].name);
+  }*/
+  setShopMenu(m, s);
 }
 
 void setMenuStr(Menu* m, int set_num, char* str) {
@@ -47,13 +54,13 @@ void setMenuStr(Menu* m, int set_num, char* str) {
 void setItemMenu(MyMenu *m, Player *p, Item item[]) {
   int i;
   deleteMenu(&m->item_menu[p->player_id]);
-  for(i = 0; i < p->bag.size && p->bag.items[i].num > 0; i++);
+  for(i = 0; i < p->bag.size && p->bag.item[i].num > 0; i++);
   initMenu(&m->item_menu[p->player_id], i+1);
   setMenuStr(&m->item_menu[p->player_id], 0, "Back");
 
   for(i = 0; i < m->item_menu[p->player_id].menu_num; i++) {
     char str[20 + 3] = {};
-    sprintf(str, "%s x%d", item[p->bag.items[i].item_id].name, p->bag.items[i].num);
+    sprintf(str, "%s x%d", item[p->bag.item[i].item_id].name, p->bag.item[i].num);
     setMenuStr(&m->item_menu[p->player_id], i+1, str);
   }
 }
@@ -62,6 +69,15 @@ void setItemMenuAll(MyMenu *m, Sugoroku *s) {
   int i;
   for(i = 0; i < s->player_num; i++) {
     setItemMenu(m, &s->player[i], s->item);
+  }
+}
+
+void setShopMenu(MyMenu *m, Sugoroku *s) {
+  int i;
+  for(i = 0; i < s->shop.size; i++) {
+    char str[20 + 10] = {};
+    sprintf(str, "%s $%d x%d", s->item[s->shop.item[i].item_id].name, s->shop.item[i].price, s->shop.item[i].num);
+    setMenuStr(&m->shop_menu, i+1, str);
   }
 }
 

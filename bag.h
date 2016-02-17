@@ -10,7 +10,7 @@ typedef struct BagItem {
 typedef struct Bag
 {
   // 1アイテム番号,2は個数
-  BagItem *items;
+  BagItem *item;
   int size;
 } Bag;
 

@@ -63,11 +63,18 @@ int dispmap(Map* m, Player p[], int player_num, int x, int y, Position pos, int 
         temp[2][2] = ' ';
 
         /* 表示パターン列挙 */
-        if (m->field[i][j] == 2) {
+        if (m->field[i][j] == START) {
           temp[1][2] = 'S';
         }
-        else if (m->field[i][j] == 3) {
+        else if (m->field[i][j] == GOAL) {
           temp[1][2] = 'G';
+        }
+        else if(m->field[i][j] == SHOP) {
+          temp[1][2] = 'S';
+          temp[1][3] = 'H';
+        }
+        else if(m->field[i][j] == COIN) {
+          temp[1][2] = 'C';
         }
         else if (m->field[i][j] >= 21) {
           temp[1][1] = '-';
@@ -77,7 +84,7 @@ int dispmap(Map* m, Player p[], int player_num, int x, int y, Position pos, int 
           temp[1][1] = '+';
           temp[1][2] = (m->field[i][j] % 10)+'0';
         }
-        else if (m->field[i][j] >= 4) {
+        else if (m->field[i][j] >= 5) {
           temp[1][2] = '?';
         }
 
@@ -141,6 +148,9 @@ void dispMove(SugorokuStatus *ss, DispOption *doption) {
   mvprintw(doption->mes_y, doption->mes_x, "あと%d マス", ss->move_num);
 }
 
+void dispPanelEffect(Sugoroku *s, SugorokuStatus *ss, int item_id, DispOption *doption) {
+}
+
 void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption) {
   int i;
   for(i = 0; i < s->player_num; i++) {
@@ -161,6 +171,12 @@ void dispUseItem(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *dopti
   mvprintw(doption->mes_y, doption->mes_x, "[%d]%sは[%d]%sに「%s」を使った！", ss->current_player, s->player[ss->current_player].name, ss->item_target, s->player[ss->item_target].name, s->item[ss->select_itemid].name);
 }
 
+void dispShop(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
+  dispmenu(&mymenu->shop_menu, doption->menu_x, doption->menu_y);
+  dispmenu(&mymenu->item_menu[ss->current_player], doption->menu_x, doption->menu_y + mymenu->shop_menu.menu_num + 2);
+  mvprintw(doption->mes_y, doption->mes_x, "[%d] %sの番 残金%dコイン", ss->current_player, s->player[ss->current_player].name, s->player[ss->current_player].money);
+}
+
 int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene, DispOption *doption) {
   erase();
   Position dpos;
@@ -169,13 +185,13 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
   dpos.y -= doption->map_h/2;
   if(dpos.x < 0) {
     dpos.x = 0;
-  } else if(dpos.x >= sugoroku->map.width - doption->map_w) {
-    dpos.x = sugoroku->map.width - doption->map_w;
+  } else if(dpos.x >= sugoroku->map.width - doption->map_w - 1) {
+    dpos.x = sugoroku->map.width - doption->map_w/2 - 1;
   }
   if(dpos.y < 0) {
     dpos.y = 0;
-  } else if(dpos.y >= sugoroku->map.height - doption->map_h) {
-    dpos.y = sugoroku->map.height - doption->map_h;
+  } else if(dpos.y >= sugoroku->map.height - doption->map_h - 1) {
+    dpos.y = sugoroku->map.height - doption->map_h/2 - 1;
   }
   dispmap(&sugoroku->map, sugoroku->player, sugoroku->player_num, doption->std_x, doption->std_y, dpos, doption->map_w, doption->map_h);
 
@@ -197,6 +213,9 @@ int display(Sugoroku *sugoroku, SugorokuStatus *ss, MyMenu *mymenu, Scene scene,
     break;
   case S_THROWDICE:
     dispThrowDice(ss, doption);
+    break;
+  case S_SHOP:
+    dispShop(sugoroku, ss, mymenu, doption);
     break;
   case S_MOVE:
     dispMove(ss, doption);

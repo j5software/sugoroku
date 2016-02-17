@@ -5,6 +5,7 @@
 
 struct Sugoroku;
 struct SugorokuStatus;
+struct DispOption;
 
 typedef struct Item
 {

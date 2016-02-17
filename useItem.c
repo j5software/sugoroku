@@ -50,7 +50,7 @@ void useItem5(Sugoroku *s, SugorokuStatus *ss, int player_id, int target) {
 
 void useItem6(Sugoroku *s, SugorokuStatus *ss, int player_id, int target) {
   //サイコロの出た目を2倍にする
-  ss->dice_rate = 2.0;
+  ss->dice_rate[target] = 2.0;
 }
 
 void useItem7(Sugoroku *s, SugorokuStatus *ss, int player_id, int target) {

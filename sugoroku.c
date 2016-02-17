@@ -9,21 +9,26 @@ int initSugoroku(Sugoroku *s, int player_num) {
   for(i = 0; i < player_num; i++) {
     initPlayer(&(s->player[i]), i);
   }
-  if(!readMap(&s->map, "./map.dat")) return 0;
+  if(!readMap(&s->map, "./map_test.dat")) return 0;
   if(!importItemFile(s, "./ITEM.csv")) return 0;
+  if(!importShop(&s->shop, "./shop.csv")) return 0;
   if(!setPlayerStart(s)) return 0;
 
   return 1;
 }
 
-void initSugorokuStatus(SugorokuStatus *ss) {
+void initSugorokuStatus(SugorokuStatus *ss, Sugoroku *s) {
+  int i;
   ss->current_player = 0;
   ss->move_num = 0;
-  ss->dice_rate = 1.0;
   ss->goal_player_num = 0;
   ss->select_itemid = -1;
   ss->item_target = 0;
   ss->select_bag = 0;
+  ss->dice_rate = (double *)malloc(sizeof(double)*s->player_num);
+  for(i = 0; i < s->player_num; i++) {
+    ss->dice_rate[i] = 1.0;
+  }
   initPositionList(&ss->plist);
 }
 
@@ -38,6 +43,10 @@ int finalizeSugoroku(Sugoroku *s) {
   if(s->item)
     free(s->item);
   return 1;
+}
+
+void finalizeSugorokuStatus(SugorokuStatus *ss) {
+  free(ss->dice_rate);
 }
 
 int importItemFile(Sugoroku *sugoroku, char* dir)
