@@ -6,7 +6,6 @@
 #include "sugoroku.h"
 #include <ncurses.h>
 
-void inputName(Player *p);
 void initCurses();
 
 #endif
