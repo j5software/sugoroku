@@ -22,9 +22,6 @@ int setUseItem(Sugoroku *s) {
   s->item[4].use = useItem4;
   s->item[5].use = useItem5;
   s->item[6].use = useItem6;
-  s->item[7].use = useItem7;
-  s->item[8].use = useItem8;
-  s->item[9].use = useItem9;
   return 1;
 }
 
