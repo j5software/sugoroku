@@ -178,10 +178,6 @@ void throwDiceAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int playe
 }
 
 void resultAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene) {
-  // 未完成
-  //
-  //
-  //
   if(current_key == '\n' || current_key == 'z') {
     *scene = S_QUIT;
     int i;
