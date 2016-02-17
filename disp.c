@@ -149,9 +149,6 @@ void dispMove(SugorokuStatus *ss, DispOption *doption) {
   mvprintw(doption->mes_y, doption->mes_x, "あと%d マス", ss->move_num);
 }
 
-void dispPanelEffect(Sugoroku *s, SugorokuStatus *ss, int item_id, DispOption *doption) {
-}
-
 void dispPlayerStatus(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
   int i = 0;
   mvprintw(doption->std_y + doption->map_h*MASU_H - i, doption->menu_x, "money:%d", s->player[ss->current_player].money);
