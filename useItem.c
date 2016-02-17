@@ -22,13 +22,13 @@ void useItem1(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene 
      printw("%sの所持金は%d円増えた．\n", p[get_player].name, stolen_money);*/
 }
 
-void useItem3(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
+void useItem2(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //選択したプレイヤーと場所を交換する
   changePosition(s->player, player_id, target);
   //printw("%sさんと%sさんの位置を交換しました．\n", p[player_num].name, p[change_player].name);
 }
 
-void useItem4(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
+void useItem3(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //全部のプレイヤーの場所をシャッフル
   int i;
   int num2;
@@ -40,17 +40,17 @@ void useItem4(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene 
   //printw("全員の位置をシャッフルしました．\n");
 }
 
-void useItem5(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
+void useItem4(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //SHOPのマスじゃないけどSHOPを開く
   *scene = S_SHOP;
 }
 
-void useItem6(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
+void useItem5(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //サイコロの出た目を2倍にする
   ss->dice_rate[target] = 2.0;
 }
 
-void useItem9(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
+void useItem6(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //ランダムでアイテム使用
   ss->select_itemid = rand()%s->item_num;
   *scene = S_SELECT_TARGET;
