@@ -12,10 +12,3 @@ void initCurses() {
   keypad(stdscr,TRUE);
   clear();
 }
-
-void inputName(Player *p)
-{
-  //change after
-  printf("input player name\n");
-  scanf("%s", p->name);
-}
