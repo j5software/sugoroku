@@ -22,11 +22,6 @@ void useItem1(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene 
      printw("%sの所持金は%d円増えた．\n", p[get_player].name, stolen_money);*/
 }
 
-void useItem2(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
-  //ぎゃくてんスイッチ：スタートとゴールを逆にする
-  //プレイヤーの進む方向を変更する
-}
-
 void useItem3(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //選択したプレイヤーと場所を交換する
   changePosition(s->player, player_id, target);
@@ -53,21 +48,6 @@ void useItem5(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene 
 void useItem6(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
   //サイコロの出た目を2倍にする
   ss->dice_rate[target] = 2.0;
-}
-
-void useItem7(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
-  //他のプレイヤーを1回休みにする
-}
-
-void useItem8(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
-  //お金を払った分だけマスを進む
-  // めんどいからやめる
-  /*
-  int pay_money;
-  printw("お金を払った分だけ進むことができます．(最大5マス)");
-  scanw("%d", &pay_money);
-  p->money -= pay_money;*/
-  //あとまわし
 }
 
 void useItem9(Sugoroku *s, SugorokuStatus *ss, int player_id, int target, Scene *scene) {
