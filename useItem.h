@@ -9,8 +9,5 @@ void useItem3(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int 
 void useItem4(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
 void useItem5(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
 void useItem6(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
-void useItem7(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
-void useItem8(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
-void useItem9(struct Sugoroku *s, struct SugorokuStatus *ss, int player_id, int target, Scene *scene);
 void changePosition(Player *p, int num1, int num2);
 #endif
