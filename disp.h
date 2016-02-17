@@ -14,6 +14,7 @@ int dispmap(Map* m, Player p[], int player_num, int x, int y, Position pos, int 
 int dispmenu(Menu* m, int x, int y);
 void dispMove(SugorokuStatus *ss, DispOption *doption);
 void dispPanelEffect(Sugoroku *s, SugorokuStatus *ss, int item_id, DispOption *doption);
+void dispPlayerStatus(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption);
 void dispThrowDice(SugorokuStatus *ss, DispOption *doption);
 void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption);
 void dispSelectTarget(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption);

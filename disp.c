@@ -12,6 +12,7 @@ void initDispOption(DispOption *doption) {
 
 void dispField(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
   dispmenu(&mymenu->main_menu, doption->menu_x, doption->menu_y);
+  dispPlayerStatus(s, ss, mymenu, doption);
   mvprintw(doption->mes_y, doption->mes_x, "[%d] %sの番", ss->current_player, s->player[ss->current_player].name);
 }
 
@@ -151,6 +152,14 @@ void dispMove(SugorokuStatus *ss, DispOption *doption) {
 void dispPanelEffect(Sugoroku *s, SugorokuStatus *ss, int item_id, DispOption *doption) {
 }
 
+void dispPlayerStatus(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {
+  int i = 0;
+  mvprintw(doption->std_y + doption->map_h*MASU_H - i, doption->menu_x, "money:%d", s->player[ss->current_player].money);
+  i++;
+  mvprintw(doption->std_y + doption->map_h*MASU_H - i, doption->menu_x, "name:%s", s->player[ss->current_player].name);
+  i++;
+}
+
 void dispResult(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption) {
   int i;
   for(i = 0; i < s->player_num; i++) {
@@ -168,7 +177,11 @@ void dispSelectTarget(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOptio
 }
 
 void dispUseItem(Sugoroku *s, SugorokuStatus *ss, Scene scene, DispOption *doption) {
-  mvprintw(doption->mes_y, doption->mes_x, "[%d]%sは[%d]%sに「%s」を使った！", ss->current_player, s->player[ss->current_player].name, ss->item_target, s->player[ss->item_target].name, s->item[ss->select_itemid].name);
+  if(s->item[ss->select_itemid].hastarget == 0) {
+    mvprintw(doption->mes_y, doption->mes_x, "[%d]%sは「%s」を使った！", ss->current_player, s->player[ss->current_player].name, s->item[ss->select_itemid].name);
+  } else {
+    mvprintw(doption->mes_y, doption->mes_x, "[%d]%sは[%d]%sに「%s」を使った！", ss->current_player, s->player[ss->current_player].name, ss->item_target, s->player[ss->item_target].name, s->item[ss->select_itemid].name);
+  }
 }
 
 void dispShop(Sugoroku *s, SugorokuStatus *ss, MyMenu *mymenu, DispOption *doption) {

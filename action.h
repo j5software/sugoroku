@@ -17,7 +17,7 @@ void shopAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id,
 void moveAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene *scene);
 int throwDice(double rate);
 void throwDiceAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene);
-void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id);
+void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id, Scene *scene);
 void useItemAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene);
 void resultAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene);
 

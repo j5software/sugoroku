@@ -24,6 +24,7 @@ int setUseItem(Sugoroku *s) {
   s->item[6].use = useItem6;
   s->item[7].use = useItem7;
   s->item[8].use = useItem8;
+  s->item[9].use = useItem9;
   return 1;
 }
 
@@ -77,9 +78,10 @@ void sugorokuMain(Sugoroku *sugoroku) {
   strcpy(sugoroku->player[1].name, "one");
   strcpy(sugoroku->player[2].name, "two");
   strcpy(sugoroku->player[3].name, "three");
-  sugoroku->player[0].money = 10000;
-  addBagItem(&sugoroku->player[0].bag, 6, 1);
-  addBagItem(&sugoroku->player[0].bag, 6, 1);
+  addBagItem(&sugoroku->player[0].bag, 6, 2);
+  addBagItem(&sugoroku->player[1].bag, 6, 2);
+  addBagItem(&sugoroku->player[2].bag, 6, 2);
+  addBagItem(&sugoroku->player[3].bag, 6, 2);
   initCurses();
   initMyMenu(&menus, sugoroku);
   initSugorokuStatus(&sstatus, sugoroku);

@@ -21,14 +21,14 @@ int addBagItem(Bag *b, int item_id, int num) {
   for(i = 0; i < b->size; i++) {
     if(b->item[i].item_id == item_id) {
       b->item[i].item_id = item_id;
-      b->item[i].num++;
+      b->item[i].num += num;
       return 1;
     }
   }
   for(i = 0; i < b->size; i++) {
     if(b->item[i].num == 0) {
       b->item[i].item_id = item_id;
-      b->item[i].num++;
+      b->item[i].num += num;
       return 1;
     }
   }
@@ -37,6 +37,9 @@ int addBagItem(Bag *b, int item_id, int num) {
 
 int popBagItem(Bag *b, int bag_num) {
   int i;
+  if(bag_num < 0) {
+    return -1;
+  }
   if(b->item[bag_num].num <= 0) {
     return -1;
   }

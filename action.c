@@ -57,6 +57,10 @@ void panelEventAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int play
     }
     clearPosition(&ss->plist);
     break;
+  case GET9:
+    addBagItem(&s->player[player_id].bag, 9, 1);
+    s->map.field[s->player[player_id].pos.y][s->player[player_id].pos.x] = 1;
+    break;
   default:
     // nマス進む
     if(s->map.field[ppos.y][ppos.x] >= 11 && s->map.field[ppos.y][ppos.x] < 20) {
@@ -113,13 +117,19 @@ void selectAction(int current_key, Menu *m) {
 }
 
 void selectTargetAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, MyMenu *menus, Scene* scene) {
+  if(s->item[ss->select_itemid].hastarget == 0) {
+    *scene = S_USEITEM;
+    ss->item_target = player_id;
+    useItem(s, ss, player_id, ss->item_target, ss->select_itemid, scene);
+    setItemMenuAll(menus, s);
+  }
   if(current_key == '\n' || current_key == 'z') {
     if(menus->target_menu.select == 0) {
       *scene = S_ITEMMENU;
     } else {
       *scene = S_USEITEM;
       ss->item_target = menus->target_menu.select - 1;
-      useItem(s, ss, player_id, ss->item_target, ss->select_itemid);
+      useItem(s, ss, player_id, ss->item_target, ss->select_itemid, scene);
       setItemMenuAll(menus, s);
     }
   } else if(current_key == 'x') {
@@ -181,9 +191,9 @@ void resultAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_i
   }
 }
 
-void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id) {
-  s->item[item_id].use(s, ss, player_id, target);
+void useItem(Sugoroku *s, SugorokuStatus* ss, int player_id, int target, int item_id, Scene *scene) {
   popBagItem(&s->player[player_id].bag, ss->select_bag);
+  s->item[item_id].use(s, ss, player_id, target, scene);
 }
 
 void useItemAction(int current_key, Sugoroku *s, SugorokuStatus* ss, int player_id, Scene* scene) {

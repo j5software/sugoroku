@@ -9,7 +9,7 @@ int initSugoroku(Sugoroku *s, int player_num) {
   for(i = 0; i < player_num; i++) {
     initPlayer(&(s->player[i]), i);
   }
-  if(!readMap(&s->map, "./map_test.dat")) return 0;
+  if(!readMap(&s->map, "./map.dat")) return 0;
   if(!importItemFile(s, "./ITEM.csv")) return 0;
   if(!importShop(&s->shop, "./shop.csv")) return 0;
   if(!setPlayerStart(s)) return 0;
@@ -77,7 +77,8 @@ int importItemFile(Sugoroku *sugoroku, char* dir)
   sugoroku->item = (Item *)malloc((sizeof(Item)* sugoroku->item_num));
 
   for (i = 0; i < sugoroku->item_num; i++) {
-    fscanf(fp, "%d, %s\n", &sugoroku->item[i].id,  sugoroku->item[i].name);
+    initItem(&sugoroku->item[i]);
+    fscanf(fp, "%d, %[^,], %d\n", &sugoroku->item[i].id,  sugoroku->item[i].name, &sugoroku->item[i].hastarget);
   }
 
 

@@ -12,7 +12,8 @@ typedef enum MasuNum {
   START = 2,
   GOAL = 3,
   SHOP = 4,
-  COIN = 5
+  COIN = 5,
+  GET9 = 6
 } MasuNum;
 
 int readMap(Map* p, char* dir);
